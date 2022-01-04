@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import {getTest} from '../Services/http';
 import {colors} from '../utils/colors';
 import Ballons from './Ballons';
 import Game from './Game/Game';
@@ -15,16 +16,19 @@ import MesGrilles from './MesGrilles/MesGrilles';
 
 class Home extends Component {
   state = {link: '', code: '', uniqueId: '', loading: true};
+  async componentDidMount() {
+    console.log('hello 2');
+    const test = await getTest();
+    console.log('test', test);
+  }
   render() {
+    console.log('hello');
     return (
       <ScrollView
         contentContainerStyle={{
           backgroundColor: colors.background,
           paddingBottom: 500,
         }}>
-        <View style={{paddingHorizontal: 20}}>
-          <Text style={{fontSize: 30, fontWeight: 'bold'}}>Ma grille foot</Text>
-        </View>
         <Ballons />
         <Game />
         <MesGrilles />

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   SafeAreaView,
   StatusBar,
   Text,
@@ -12,6 +13,69 @@ import {colors} from './utils/colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+function CustomHeader() {
+  return (
+    <View
+      style={{
+        backgroundColor: colors.background,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: 10,
+      }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: 10,
+        }}>
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
+          0
+        </Text>
+        <Image
+          style={{
+            width: 30,
+            height: 30,
+          }}
+          source={require('./images/coin.png')}
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <View
+          style={{
+            backgroundColor: colors.backBack,
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 25,
+            width: 25,
+            borderRadius: 5,
+            marginRight: 5,
+          }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 2}}>
+            +
+          </Text>
+        </View>
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
+          0
+        </Text>
+        <Image
+          style={{
+            width: 30,
+            height: 30,
+          }}
+          source={require('./images/shield.png')}
+        />
+      </View>
+    </View>
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -30,32 +94,23 @@ export default function App() {
             component={Home}
             options={{
               tabBarLabel: 'Home',
+              header: props => <CustomHeader {...props} />,
               tabBarIcon: ({color, size}) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} />
               ),
             }}
           />
           <Tab.Screen
-            name="Classement"
+            name="Team"
             component={Home}
             options={{
-              tabBarLabel: 'Classement',
+              tabBarLabel: 'Teams',
               tabBarIcon: ({color, size}) => (
-                <View
-                  style={{
-                    backgroundColor: 'red',
-                    borderRadius: 50,
-                    height: 35,
-                    width: 35,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="podium"
-                    color={color}
-                    size={size}
-                  />
-                </View>
+                <MaterialCommunityIcons
+                  name="podium"
+                  color={color}
+                  size={size}
+                />
               ),
             }}
           />
