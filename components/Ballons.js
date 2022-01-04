@@ -21,7 +21,7 @@ class Ballons extends Component {
           marginTop: 20,
           paddingHorizontal: 15,
         }}>
-        <Text style={{fontWeight: '500', fontSize: 22, marginBottom: 10}}>
+        <Text style={{fontWeight: '500', fontSize: 22, marginBottom: 7}}>
           Récupère un max de pièces
         </Text>
         <View style={{backgroundColor: colors.back, borderRadius: 15}}>
@@ -51,6 +51,9 @@ class Ballons extends Component {
             })}
           </ScrollView>
         </View>
+        <Text style={{marginTop: 10, alignSelf: 'flex-end'}}>
+          Clique sur chaque ballon pour faire le plein
+        </Text>
       </View>
     );
   }
