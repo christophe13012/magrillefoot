@@ -19,59 +19,70 @@ function CustomHeader() {
     <View
       style={{
         backgroundColor: colors.background,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        marginRight: 10,
+        marginHorizontal: 10,
+        paddingBottom: 20,
       }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginRight: 10,
-        }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
-          0
-        </Text>
-        <Image
-          style={{
-            width: 30,
-            height: 30,
-          }}
-          source={require('./images/coin.png')}
-        />
+      <View>
+        <Text style={{fontSize: 20}}>Salut Chris 👋</Text>
       </View>
       <View
         style={{
-          flexDirection: 'row',
-          alignItems: 'center',
           justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
         }}>
         <View
           style={{
-            backgroundColor: colors.backBack,
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            height: 25,
-            width: 25,
-            borderRadius: 5,
-            marginRight: 5,
+            marginRight: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 2}}>
-            +
+          <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
+            0
           </Text>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+            }}
+            source={require('./images/coin.png')}
+          />
         </View>
-        <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
-          0
-        </Text>
-        <Image
+        <View
           style={{
-            width: 30,
-            height: 30,
-          }}
-          source={require('./images/shield.png')}
-        />
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: colors.backBack,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 25,
+              width: 25,
+              borderRadius: 5,
+              marginRight: 5,
+            }}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 2}}>
+              +
+            </Text>
+          </View>
+          <Text style={{fontSize: 20, fontWeight: 'bold', marginRight: 3}}>
+            0
+          </Text>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+            }}
+            source={require('./images/shield.png')}
+          />
+        </View>
       </View>
     </View>
   );

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1013145446606",
+    "firebase_url": "https://magrillefoot-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "magrillefoot",
+    "storage_bucket": "magrillefoot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013145446606:android:1e7f8ae0ffab1f1c7f889f",
+        "android_client_info": {
+          "package_name": "com.magrillefoot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013145446606-q3q49ne0ovbiqemk1c5nrbo2htakra9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfthkFUFQvvDhmbfFm-8HYqutgaINq_JM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013145446606-q3q49ne0ovbiqemk1c5nrbo2htakra9n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1013145446606-ssu842eua79sej9cumpsj9hefog2se9s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.maGrilleFoot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
