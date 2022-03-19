@@ -7,29 +7,57 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {getTest} from '../Services/http';
 import {colors} from '../utils/colors';
 import Ballons from './Ballons';
 import Game from './Game/Game';
-import Items from './Items';
 import MesGrilles from './MesGrilles/MesGrilles';
+import {connect} from 'react-redux';
+import {firebase} from '@react-native-firebase/database';
+import {save_items} from '../Store/actions';
+import CustomHeader from './CustomHeader';
+
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    save_items: items => dispatch(save_items(items)),
+  };
+};
 
 class Home extends Component {
-  state = {link: '', code: '', uniqueId: '', loading: true};
+  refItems = null;
   async componentDidMount() {
-    console.log('hello 2');
-    const test = await getTest();
-    console.log('test', test);
+    this.refItems && this.refItems.off('value', this.listenerItems);
+    this.refItems = firebase
+      .app()
+      .database(
+        'https://magrillefoot-default-rtdb.europe-west1.firebasedatabase.app/',
+      )
+      .ref(`items/${firebase.auth().currentUser.uid}`);
+
+    this.listenerItems = this.refItems.on('value', snap => {
+      if (snap) {
+        const items = snap.val();
+        if (items) {
+          this.props.save_items(items);
+        }
+      }
+    });
   }
   render() {
-    console.log('hello');
+    console.log('items', this.props.items);
     return (
       <ScrollView
         contentContainerStyle={{
           backgroundColor: colors.background,
           paddingBottom: 500,
         }}>
-        <Ballons />
+        <CustomHeader />
+        <Ballons ballons={this.props.items.bingoballs} />
         <Game />
         <MesGrilles />
       </ScrollView>
@@ -37,4 +65,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

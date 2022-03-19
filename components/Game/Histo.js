@@ -14,7 +14,7 @@ const Histo = () => {
   resultats = [0, 1, 2, 3, 4, 5, 6];
   return (
     <View style={{marginTop: 15}}>
-      <Text style={{color: 'black'}}>Résultats et historique</Text>
+      <Text style={{color: colors.black}}>Résultats et historique</Text>
       <ScrollView
         horizontal={true}
         contentContainerStyle={{

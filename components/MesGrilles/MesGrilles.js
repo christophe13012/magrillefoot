@@ -5,7 +5,9 @@ import {colors} from '../../utils/colors';
 const MesGrilles = () => {
   return (
     <View style={{marginTop: 35, marginHorizontal: 20}}>
-      <Text style={{fontWeight: '500', fontSize: 22}}>Mes grilles</Text>
+      <Text style={{fontWeight: '500', fontSize: 22, color: colors.white}}>
+        Mes grilles
+      </Text>
       <ScrollView
         horizontal={true}
         contentContainerStyle={{

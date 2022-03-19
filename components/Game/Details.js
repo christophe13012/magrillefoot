@@ -23,8 +23,8 @@ const Details = () => {
         <Text>#</Text>
       </View>
       <View>
-        <Text style={{color: 'black'}}>Grille en cours</Text>
-        <Text style={{color: colors.grey}}>à valider avant le 15 juillet</Text>
+        <Text style={{color: colors.black}}>Grille en cours</Text>
+        <Text style={{color: colors.black}}>à valider avant le 15 juillet</Text>
       </View>
     </View>
   );
