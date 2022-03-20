@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {colors} from '../utils/colors';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const CustomHeader = ({ballons}) => {
   const items = useSelector(state => state.items);
-  console.log('items', items);
   return (
     <View
       style={{
@@ -91,7 +90,7 @@ const CustomHeader = ({ballons}) => {
               width: 30,
               height: 30,
             }}
-            source={require('../images/shield.png')}
+            source={require('../images/glove.png')}
           />
         </View>
       </View>

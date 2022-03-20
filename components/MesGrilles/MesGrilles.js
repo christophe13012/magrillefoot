@@ -3,6 +3,7 @@ import {View, Text, ScrollView} from 'react-native';
 import {colors} from '../../utils/colors';
 
 const MesGrilles = () => {
+  const resultats = [0];
   return (
     <View style={{marginTop: 35, marginHorizontal: 20}}>
       <Text style={{fontWeight: '500', fontSize: 22, color: colors.white}}>

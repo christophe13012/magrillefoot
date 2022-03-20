@@ -10,7 +10,8 @@ const JouerButton = () => {
     <TouchableOpacity
       onPress={() => navigation.navigate('Jouer')}
       style={{
-        marginTop: 10,
+        marginTop: 30,
+        marginBottom: 20,
         backgroundColor: colors.background,
         borderRadius: 10,
         height: 50,

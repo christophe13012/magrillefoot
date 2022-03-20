@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {colors} from '../../utils/colors';
 import Details from './Details';
-import GrilleGame from './GrilleGame';
 import Histo from './Histo';
 import JouerButton from './JouerButton';
 
-const Game = ({navigation}) => {
+const Game = ({navigation, grilles}) => {
   return (
     <View
       style={{
@@ -44,9 +43,9 @@ const Game = ({navigation}) => {
           </Text>
         </View>
         <View style={{paddingHorizontal: 7}}>
-          <Details />
+          <Details grilles={grilles} />
           <JouerButton />
-          <Histo />
+          <Histo grilles={grilles} />
         </View>
       </View>
     </View>

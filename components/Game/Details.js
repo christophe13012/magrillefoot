@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {colors} from '../../utils/colors';
+import moment from 'moment';
+import {Badge} from 'react-native-paper';
 
-const Details = () => {
+const Details = ({grilles}) => {
+  console.log(grilles.matches[grilles.details.actual].num);
   return (
     <View
       style={{
@@ -13,18 +16,23 @@ const Details = () => {
       <View
         style={{
           borderRadius: 50,
-          backgroundColor: colors.back,
+          backgroundColor: 'red',
+          paddingHorizontal: 4,
           height: 30,
-          width: 30,
           alignItems: 'center',
           justifyContent: 'center',
           marginRight: 10,
         }}>
-        <Text>#</Text>
+        <Text style={{color: 'white'}}>
+          #{grilles.matches[grilles.details.actual].num}
+        </Text>
       </View>
       <View>
         <Text style={{color: colors.black}}>Grille en cours</Text>
-        <Text style={{color: colors.black}}>à valider avant le 15 juillet</Text>
+        <Text style={{color: colors.black}}>
+          à valider avant le{' '}
+          {moment(new Date(grilles.details.limit)).format('DD/MM à H:mm')}
+        </Text>
       </View>
     </View>
   );

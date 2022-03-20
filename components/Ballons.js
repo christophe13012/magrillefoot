@@ -93,7 +93,7 @@ const Ballons = ({ballons}) => {
                   overflow: 'hidden',
                   borderRadius: 5,
                 }}>
-                Tu as récolté toutes tes pièces du jour 👍
+                Tu as récolté toutes tes pièces dispos 👍
               </Text>
               <Text
                 style={{
