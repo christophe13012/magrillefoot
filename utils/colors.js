@@ -9,4 +9,6 @@ export const colors = {
   text: 'black',
   dark: '#1F1C3B',
   light: '#C7FE4B',
+  warning: '#FFA900',
+  danger: '#F93154',
 };

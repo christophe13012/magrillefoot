@@ -23,15 +23,10 @@ import {rootReducer} from './Store/reducer';
 import {persistStore, persistReducer} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  Button,
-  Paragraph,
-  Dialog,
-  Portal,
-  Provider as PaperProvider,
-} from 'react-native-paper';
+import {Provider as PaperProvider} from 'react-native-paper';
 import CustomHeader from './components/CustomHeader';
 import Jouer from './components/Game/Jouer';
+import {Root} from 'native-base';
 
 const persistConfig = {
   key: 'root',
@@ -53,7 +48,7 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name="Jouer"
         component={Jouer}
-        options={{presentation: 'fullScreenModal'}}
+        //options={{presentation: 'fullScreenModal'}}
       />
     </HomeStack.Navigator>
   );
@@ -91,60 +86,62 @@ export default function App() {
             {!user ? (
               <Welcome />
             ) : (
-              <NavigationContainer>
-                <Tab.Navigator
-                  screenOptions={{
-                    tabBarStyle: {backgroundColor: colors.background},
-                    headerShown: false,
-                  }}>
-                  <Tab.Screen
-                    name="Homescreen"
-                    component={HomeStackScreen}
-                    options={{
-                      tabBarLabel: 'Jouer',
-                      tabBarLabelStyle: {color: colors.white},
-                      header: props => <CustomHeader {...props} />,
-                      tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons
-                          name="home"
-                          color={colors.white}
-                          size={size}
-                        />
-                      ),
-                    }}
-                  />
-                  <Tab.Screen
-                    name="Team"
-                    component={Home}
-                    options={{
-                      tabBarLabel: 'Teams',
-                      tabBarLabelStyle: {color: colors.white},
-                      tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons
-                          name="podium"
-                          color={colors.white}
-                          size={size}
-                        />
-                      ),
-                    }}
-                  />
-                  <Tab.Screen
-                    name="Profil"
-                    component={Profil}
-                    options={{
-                      tabBarLabel: 'Profil',
-                      tabBarLabelStyle: {color: colors.white},
-                      tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons
-                          name="account"
-                          color={colors.white}
-                          size={size}
-                        />
-                      ),
-                    }}
-                  />
-                </Tab.Navigator>
-              </NavigationContainer>
+              <Root>
+                <NavigationContainer>
+                  <Tab.Navigator
+                    screenOptions={{
+                      tabBarStyle: {backgroundColor: colors.background},
+                      headerShown: false,
+                    }}>
+                    <Tab.Screen
+                      name="Homescreen"
+                      component={HomeStackScreen}
+                      options={{
+                        tabBarLabel: 'Jouer',
+                        tabBarLabelStyle: {color: colors.white},
+                        header: props => <CustomHeader {...props} />,
+                        tabBarIcon: ({color, size}) => (
+                          <MaterialCommunityIcons
+                            name="home"
+                            color={colors.white}
+                            size={size}
+                          />
+                        ),
+                      }}
+                    />
+                    <Tab.Screen
+                      name="Team"
+                      component={Home}
+                      options={{
+                        tabBarLabel: 'Teams',
+                        tabBarLabelStyle: {color: colors.white},
+                        tabBarIcon: ({color, size}) => (
+                          <MaterialCommunityIcons
+                            name="podium"
+                            color={colors.white}
+                            size={size}
+                          />
+                        ),
+                      }}
+                    />
+                    <Tab.Screen
+                      name="Profil"
+                      component={Profil}
+                      options={{
+                        tabBarLabel: 'Profil',
+                        tabBarLabelStyle: {color: colors.white},
+                        tabBarIcon: ({color, size}) => (
+                          <MaterialCommunityIcons
+                            name="account"
+                            color={colors.white}
+                            size={size}
+                          />
+                        ),
+                      }}
+                    />
+                  </Tab.Navigator>
+                </NavigationContainer>
+              </Root>
             )}
           </PersistGate>
         </Provider>

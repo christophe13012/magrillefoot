@@ -72,3 +72,12 @@ export const updateItems = async (ballon, id) => {
   data.coins = ballon.value + data.coins;
   ref.set(data);
 };
+
+export const updateBonus = async bonus => {
+  const ref = database.ref(`/items/${firebase.auth().currentUser.uid}`);
+  const snapshot = await ref.once('value');
+  let data = {...snapshot.val()};
+  data.coins = data.coins - 50;
+  data.bonus = data.bonus + bonus;
+  ref.set(data);
+};

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {colors} from '../utils/colors';
-import {Button, Paragraph, Dialog, Portal, Provider} from 'react-native-paper';
+import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
 import {updateItems} from '../Services/http';
 
 const Ballons = ({ballons}) => {
@@ -50,7 +50,6 @@ const Ballons = ({ballons}) => {
             }}
             style={{borderRadius: 15}}>
             {ballons.map((ballon, i) => {
-              console.log('ballon', ballon);
               return (
                 ballon.active && (
                   <TouchableOpacity

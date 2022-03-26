@@ -42,15 +42,15 @@ const CustomHeader = ({ballons}) => {
             style={{
               fontSize: 18,
               fontWeight: 'bold',
-              marginRight: 3,
+              marginRight: 5,
               color: colors.white,
             }}>
             {items.coins}
           </Text>
           <Image
             style={{
-              width: 30,
-              height: 30,
+              width: 25,
+              height: 25,
             }}
             source={require('../images/coin.png')}
           />
@@ -66,12 +66,12 @@ const CustomHeader = ({ballons}) => {
               backgroundColor: colors.light,
               alignItems: 'center',
               justifyContent: 'center',
-              height: 25,
-              width: 25,
+              height: 20,
+              width: 20,
               borderRadius: 5,
               marginRight: 5,
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 2}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 2}}>
               +
             </Text>
           </View>
@@ -83,15 +83,15 @@ const CustomHeader = ({ballons}) => {
               color: colors.white,
               marginLeft: 3,
             }}>
-            {items.shield}
+            {items.bonus}
           </Text>
-          <Image
+          <Text
             style={{
-              width: 30,
-              height: 30,
-            }}
-            source={require('../images/glove.png')}
-          />
+              fontSize: 22,
+              marginLeft: 1,
+            }}>
+            🍀
+          </Text>
         </View>
       </View>
     </View>
