@@ -7,13 +7,13 @@ import InputSpinner from 'react-native-input-spinner';
 import Toast from 'react-native-tiny-toast';
 import {updateBonus} from '../Services/http';
 
-const BonusStore = ({visible, setVisible}) => {
+const BonusStore = ({visible, setVisible, inGame}) => {
   const items = useSelector(state => state.items);
   const hideDialog = () => setVisible(false);
   const [sur, setSur] = useState(false);
   const [panier, setPanier] = useState(0);
   const buy = () => {
-    const bonusBuyable = Math.floor((items.coins - 50) / 100);
+    const bonusBuyable = Math.floor((items.coins - inGame) / 100);
     if (bonusBuyable >= panier) {
       setSur(true);
     } else {
@@ -67,9 +67,9 @@ const BonusStore = ({visible, setVisible}) => {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginLeft: 10,
+                  marginLeft: 30,
                 }}>
-                <Text>100</Text>
+                <Text style={{fontWeight: 'bold'}}>100</Text>
                 <Image
                   style={{
                     width: 25,
@@ -87,7 +87,7 @@ const BonusStore = ({visible, setVisible}) => {
             </View>
             <View style={{marginTop: 20, width: '50%'}}>
               <InputSpinner
-                max={Math.floor((items.coins - 50) / 100) + 1}
+                max={Math.floor((items.coins - inGame) / 100) + 1}
                 min={0}
                 colorMax={'#F78E2C'}
                 value={panier}
@@ -107,6 +107,22 @@ const BonusStore = ({visible, setVisible}) => {
                     },
                   )
                 }
+              />
+            </View>
+            <View
+              style={{
+                marginTop: 20,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontWeight: 'bold'}}>Total : {panier * 100}</Text>
+              <Image
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginLeft: 3,
+                }}
+                source={require('../images/coin.png')}
               />
             </View>
             {sur ? (
@@ -144,6 +160,7 @@ const BonusStore = ({visible, setVisible}) => {
                 <Button
                   onPress={buy}
                   uppercase={false}
+                  disabled={panier == 0}
                   style={{
                     backgroundColor: colors.light,
                     marginTop: 20,
@@ -155,7 +172,9 @@ const BonusStore = ({visible, setVisible}) => {
             )}
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Retour</Button>
+            <Button onPress={hideDialog}>
+              <Text style={{color: colors.background}}>Retour</Text>
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

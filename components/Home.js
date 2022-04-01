@@ -16,6 +16,7 @@ import {firebase} from '@react-native-firebase/database';
 import {save_grilles, save_items} from '../Store/actions';
 import CustomHeader from './CustomHeader';
 import {Toast} from 'native-base';
+import BonusStore from './BonusStore';
 
 const mapStateToProps = state => {
   return {
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 class Home extends Component {
+  state = {visible: false};
   refItems = null;
   refGrilles = null;
   async componentDidMount() {
@@ -73,19 +75,24 @@ class Home extends Component {
     });
   }
   render() {
-    console.log('items', this.props.items);
-    console.log('grilles', this.props.grilles);
     return (
-      <ScrollView
-        contentContainerStyle={{
-          backgroundColor: colors.background,
-          paddingBottom: 500,
-        }}>
-        <CustomHeader />
-        <Ballons ballons={this.props.items.bingoballs} />
-        <Game grilles={this.props.grilles} />
-        <MesGrilles />
-      </ScrollView>
+      <View>
+        <CustomHeader onStore={() => this.setState({visible: true})} />
+        <ScrollView
+          contentContainerStyle={{
+            backgroundColor: colors.background,
+            paddingBottom: 500,
+          }}>
+          <Ballons ballons={this.props.items.bingoballs} />
+          <Game grilles={this.props.grilles} />
+          <MesGrilles />
+          <BonusStore
+            visible={this.state.visible}
+            setVisible={val => this.setState({visible: val})}
+            inGame={0}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }

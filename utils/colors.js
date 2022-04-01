@@ -2,7 +2,7 @@ export const colors = {
   back: '#F6F6F6',
   backBack: '#4CAF50',
   backLight: '#C5CAE9',
-  background: '#503ACA',
+  background: '#3F51B5',
   black: 'black',
   grey: '#616161',
   white: '#ffff',

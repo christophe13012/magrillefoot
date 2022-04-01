@@ -99,7 +99,6 @@ export default function App() {
                       options={{
                         tabBarLabel: 'Jouer',
                         tabBarLabelStyle: {color: colors.white},
-                        header: props => <CustomHeader {...props} />,
                         tabBarIcon: ({color, size}) => (
                           <MaterialCommunityIcons
                             name="home"

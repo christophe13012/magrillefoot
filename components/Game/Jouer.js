@@ -27,7 +27,7 @@ const Jouer = ({params}) => {
   const grilles = useSelector(state => state.grilles);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [choix, setChoix] = useState([
     [[]],
     [[]],
@@ -464,7 +464,7 @@ const Jouer = ({params}) => {
           </View>
         </View>
       </ScrollView>
-      <BonusStore visible={visible} setVisible={setVisible} />
+      <BonusStore visible={visible} setVisible={setVisible} inGame={50} />
     </SafeAreaView>
   );
 };

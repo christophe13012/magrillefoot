@@ -2824,6 +2824,11 @@
   "resolved" "https://registry.npmjs.org/emittery/-/emittery-0.8.1.tgz"
   "version" "0.8.1"
 
+"emoji-datasource@^5.0.1", "emoji-datasource@~5.0.1":
+  "integrity" "sha512-RXokuCv4o8RFLiigN1skAdZwJuJWqtBvcK3GVKpvAL/7BeH95enmKsli7cG8YZ85RTjyEe3+GAdpJJOV43KLKQ=="
+  "resolved" "https://registry.npmjs.org/emoji-datasource/-/emoji-datasource-5.0.1.tgz"
+  "version" "5.0.1"
+
 "emoji-regex@^8.0.0":
   "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
   "resolved" "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz"
@@ -4841,6 +4846,16 @@
     "array-includes" "^3.1.3"
     "object.assign" "^4.1.2"
 
+"just-group-by@^2.0.1":
+  "integrity" "sha512-ZSrnAbsqNTKZ5M/WUyY6dovi2m1M6OM98eGkkjwXwLxdm4jy4/M6dBYpqlTvhvwbySW2NvsivoR2jSP0YR3qng=="
+  "resolved" "https://registry.npmjs.org/just-group-by/-/just-group-by-2.0.1.tgz"
+  "version" "2.0.1"
+
+"just-map-values@^3.0.2":
+  "integrity" "sha512-bPrvJIZ/0QbrsnrY1f8JxfPZ7joimSecUeYjoxVctBTYxjRKjtVU1QMgAJCK5RTo5bNGonVY7FxrwQ+gQrIyww=="
+  "resolved" "https://registry.npmjs.org/just-map-values/-/just-map-values-3.0.2.tgz"
+  "version" "3.0.2"
+
 "kind-of@^3.0.2":
   "integrity" "sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ="
   "resolved" "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz"
@@ -4949,6 +4964,11 @@
   "resolved" "https://registry.npmjs.org/lodash.frompairs/-/lodash.frompairs-4.0.1.tgz"
   "version" "4.0.1"
 
+"lodash.groupby@~4.6.0":
+  "integrity" "sha1-Cwih3PaDl8OXhVwyOXg4Mt90A9E="
+  "resolved" "https://registry.npmjs.org/lodash.groupby/-/lodash.groupby-4.6.0.tgz"
+  "version" "4.6.0"
+
 "lodash.isequal@^4.5.0":
   "integrity" "sha1-QVxEePK8wwEgwizhDtMib30+GOA="
   "resolved" "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
@@ -4959,6 +4979,11 @@
   "resolved" "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz"
   "version" "4.0.1"
 
+"lodash.mapvalues@~4.6.0":
+  "integrity" "sha1-G6+lAF3p3W9PJmaMMMo3IwzJaJw="
+  "resolved" "https://registry.npmjs.org/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz"
+  "version" "4.6.0"
+
 "lodash.merge@^4.6.2":
   "integrity" "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
   "resolved" "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
@@ -4968,6 +4993,11 @@
   "integrity" "sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA="
   "resolved" "https://registry.npmjs.org/lodash.omit/-/lodash.omit-4.5.0.tgz"
   "version" "4.5.0"
+
+"lodash.orderby@~4.6.0":
+  "integrity" "sha1-5pfwTOXXhSL1TZM4syuBozk+TrM="
+  "resolved" "https://registry.npmjs.org/lodash.orderby/-/lodash.orderby-4.6.0.tgz"
+  "version" "4.6.0"
 
 "lodash.pick@^4.4.0":
   "integrity" "sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM="
@@ -6123,6 +6153,11 @@
   "resolved" "https://registry.npmjs.org/react-freeze/-/react-freeze-1.0.0.tgz"
   "version" "1.0.0"
 
+"react-hook-form@^7.29.0":
+  "integrity" "sha512-NcJqWRF6el5HMW30fqZRt27s+lorvlCCDbTpAyHoodQeYWXgQCvZJJQLC1kRMKdrJknVH0NIg3At6TUzlZJFOQ=="
+  "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.29.0.tgz"
+  "version" "7.29.0"
+
 "react-is@^16.12.0 || ^17.0.0", "react-is@^17.0.1", "react-is@^17.0.2":
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
@@ -6166,6 +6201,35 @@
   "version" "0.2.2"
   dependencies:
     "lodash" "^4.17.15"
+
+"react-native-emoji-modal@^0.2.2":
+  "integrity" "sha512-4Smdu85v3e0uuFW5nipBCCsFPSbxmElSI3PpXyaUYBgzMugWmbkEW0DzB9Sxod/C0z3tTHuOVc81h9DwHGn2gg=="
+  "resolved" "https://registry.npmjs.org/react-native-emoji-modal/-/react-native-emoji-modal-0.2.2.tgz"
+  "version" "0.2.2"
+  dependencies:
+    "just-group-by" "^2.0.1"
+    "just-map-values" "^3.0.2"
+    "react" ">=17.0.0"
+    "react-native" ">=0.64.0"
+    "react-native-vector-icons" "^9.0.0"
+
+"react-native-emoji-picker-staltz@^1.0.0":
+  "integrity" "sha512-nLhHOAbveMwdmh+47Yf09GsbhOu+H6oLNjXvgxAq+kIeeHRzm4i/Z9ZGYxmhrrudjgVdfS7hPcYehMDWOyR7jw=="
+  "resolved" "https://registry.npmjs.org/react-native-emoji-picker-staltz/-/react-native-emoji-picker-staltz-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "emoji-datasource" "~5.0.1"
+    "lodash.groupby" "~4.6.0"
+    "lodash.mapvalues" "~4.6.0"
+    "lodash.orderby" "~4.6.0"
+    "string.fromcodepoint" "~0.2.1"
+
+"react-native-emoji-selector@^0.1.8":
+  "integrity" "sha512-PRYnzXVSxDuOm3EZEhbWAWnElQrdSEn+4tqB/BFbLdvRdrOuzFb6DqjLcyBYinSmEcxh2F4onE6h6VBHglYCSg=="
+  "resolved" "https://registry.npmjs.org/react-native-emoji-selector/-/react-native-emoji-selector-0.1.8.tgz"
+  "version" "0.1.8"
+  dependencies:
+    "emoji-datasource" "^5.0.1"
 
 "react-native-gesture-handler@^2.1.0":
   "integrity" "sha512-vF4yEUrV5GMBioTkvf5Le1l3N/52dSLBnNMFC+kZ4hssnRoXB0hEQ0ReUkZckRB5L3nbHBhAyjySEtFPx4nyEA=="
@@ -6267,7 +6331,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^15.0.2"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.66 || 1000.0.0", "react-native@>=0.38.0", "react-native@>=0.42.0", "react-native@>=0.43.0", "react-native@>=0.47.0", "react-native@>=0.56.0", "react-native@>=0.57", "react-native@>=0.63.0", "react-native@0.66.4":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.66 || 1000.0.0", "react-native@>=0.30.0", "react-native@>=0.38.0", "react-native@>=0.42.0", "react-native@>=0.43.0", "react-native@>=0.47.0", "react-native@>=0.56.0", "react-native@>=0.57", "react-native@>=0.63.0", "react-native@>=0.64.0", "react-native@0.66.4":
   "integrity" "sha512-9vx5dlSfQlKbbDtr8+xMon6qsmSu7jvjdXWZpEKh3XVKpUidbbODv7048gwVKX8YAel1egeR7hN8vzSeI6ssTw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.66.4.tgz"
   "version" "0.66.4"
@@ -6347,7 +6411,7 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@*", "react@^16.0", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.0", "react@>=16.0", "react@>=16.0.0-alpha.3", "react@>=16.3.0", "react@>=16.4.1", "react@17.0.2":
+"react@*", "react@^16.0", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.0", "react@>=15.2.0", "react@>=16.0", "react@>=16.0.0-alpha.3", "react@>=16.3.0", "react@>=16.4.1", "react@>=17.0.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -7012,6 +7076,11 @@
     "emoji-regex" "^8.0.0"
     "is-fullwidth-code-point" "^3.0.0"
     "strip-ansi" "^6.0.1"
+
+"string.fromcodepoint@~0.2.1":
+  "integrity" "sha1-jZeDM8C8klOPUPOD5IiPPlYZ1lM="
+  "resolved" "https://registry.npmjs.org/string.fromcodepoint/-/string.fromcodepoint-0.2.1.tgz"
+  "version" "0.2.1"
 
 "string.prototype.matchall@^4.0.6":
   "integrity" "sha512-6WgDX8HmQqvEd7J+G6VtAahhsQIssiZ8zl7zKh1VDMFyL3hRTJP4FTNA3RbIp2TOQ9AYNDcc7e3fH0Qbup+DBg=="

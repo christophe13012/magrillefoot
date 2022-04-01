@@ -54,11 +54,14 @@ export const initalizeItems = async (userID, name) => {
   const ref = database.ref(`/balls`);
   const snapshot = await ref.once('value');
   const items = {
+    avatar: '😀',
+    bonus: 0,
     grilles: 3,
     coins: 15,
     shield: 0,
     bingoballs: snapshot.val(),
     name,
+    xp: '0',
   };
   database.ref('items/' + userID).set(items);
   return items;
@@ -80,4 +83,9 @@ export const updateBonus = async bonus => {
   data.coins = data.coins - 50;
   data.bonus = data.bonus + bonus;
   ref.set(data);
+};
+
+export const updateAvatar = async avatar => {
+  const ref = database.ref(`/items/${firebase.auth().currentUser.uid}/avatar`);
+  ref.set(avatar);
 };

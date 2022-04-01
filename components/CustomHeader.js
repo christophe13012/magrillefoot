@@ -3,7 +3,7 @@ import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {colors} from '../utils/colors';
 import {useSelector} from 'react-redux';
 
-const CustomHeader = ({ballons}) => {
+const CustomHeader = ({ballons, onStore}) => {
   const items = useSelector(state => state.items);
   return (
     <View
@@ -12,7 +12,7 @@ const CustomHeader = ({ballons}) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        marginHorizontal: 10,
+        paddingHorizontal: 10,
         paddingBottom: 20,
       }}>
       <View>
@@ -61,7 +61,8 @@ const CustomHeader = ({ballons}) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <View
+          <TouchableOpacity
+            onPress={onStore}
             style={{
               backgroundColor: colors.light,
               alignItems: 'center',
@@ -74,7 +75,7 @@ const CustomHeader = ({ballons}) => {
             <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 2}}>
               +
             </Text>
-          </View>
+          </TouchableOpacity>
           <Text
             style={{
               fontSize: 18,
