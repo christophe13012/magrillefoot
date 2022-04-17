@@ -1,23 +1,19 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   SafeAreaView,
-  TextInput,
   StyleSheet,
-  Dimensions,
   Image,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {colors} from '../../utils/colors';
-import {Button} from 'react-native-paper';
-import {initalizeItems, isNameTaken, saveName} from '../../Services/http';
+import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
+import {validateGame} from '../../Services/http';
 import Toast from 'react-native-tiny-toast';
-import auth from '@react-native-firebase/auth';
-import {connect, useDispatch} from 'react-redux';
-import {save_items} from '../../Store/actions';
+import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import BonusStore from '../BonusStore';
@@ -28,6 +24,10 @@ const Jouer = ({params}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [visibleCongrats, setVisibleCongrats] = useState(false);
+  const hideDialogCongrats = () => {
+    navigation.navigate('Home');
+  };
   const [choix, setChoix] = useState([
     [[]],
     [[]],
@@ -46,7 +46,7 @@ const Jouer = ({params}) => {
   ]);
   const [bonusEnCours, setBonusEnCours] = useState(0);
   const select = (i, c) => {
-    const game = [...choix];
+    let game = [...choix];
     if (game[i].includes(c)) {
       if (game[i].length > 1) {
         // gants
@@ -190,6 +190,23 @@ const Jouer = ({params}) => {
       return <View style={{width: 10}}></View>;
     }
   };
+  const validate = async () => {
+    if (Date.now() > grilles.details.limit) {
+      Toast.show("L'heure limite est dépassée", {
+        position: 70,
+        containerStyle: {backgroundColor: colors.warning, width: '90%'},
+        textStyle: {color: 'white'},
+        duration: 2000,
+      });
+    } else {
+      await validateGame(choix, grilles.details.actual, bonusEnCours);
+      setVisibleCongrats(true);
+      //navigation.navigate('Home');
+    }
+  };
+  const played = choix.filter(x => x.length != 1).length;
+  const buttonLabel =
+    played === 13 ? 'match restant à choisir' : 'matches restants à choisir';
   return (
     <SafeAreaView
       style={{
@@ -199,11 +216,12 @@ const Jouer = ({params}) => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image
           style={{
-            width: 30,
-            height: 30,
-            marginLeft: 20,
+            width: 25,
+            height: 25,
+            marginLeft: 10,
+            marginTop: 10,
           }}
-          source={require('../../images/arrow-down.png')}
+          source={require('../../images/chevron-left.png')}
         />
       </TouchableOpacity>
       <View
@@ -412,7 +430,8 @@ const Jouer = ({params}) => {
             marginTop: 20,
           }}>
           <Button
-            onPress={random}
+            onPress={validate}
+            disabled={played != 14}
             uppercase={true}
             style={{
               backgroundColor: colors.background,
@@ -420,7 +439,9 @@ const Jouer = ({params}) => {
               marginRight: 10,
             }}
             labelStyle={{color: colors.white}}>
-            Valider ma grille 🔥
+            {played != 14
+              ? 14 - played + ' ' + buttonLabel
+              : 'Valider ma grille 🔥'}
           </Button>
         </View>
         <View style={{marginBottom: 50}}>
@@ -465,6 +486,42 @@ const Jouer = ({params}) => {
         </View>
       </ScrollView>
       <BonusStore visible={visible} setVisible={setVisible} inGame={50} />
+      <View>
+        <Portal>
+          <Dialog visible={visibleCongrats} onDismiss={hideDialogCongrats}>
+            <Dialog.Title>Bravo</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>
+                <View style={{alignItems: 'center'}}>
+                  <View>
+                    <Text>Ta grille est bien validée</Text>
+                    <Text>Animation</Text>
+                  </View>
+                  <View>
+                    <Text>
+                      C'est pas fini, tu peux encore valider {items.grilles}{' '}
+                      grilles
+                    </Text>
+                  </View>
+                  <View>
+                    <Button
+                      onPress={hideDialogCongrats}
+                      style={{
+                        marginTop: 10,
+                        backgroundColor: colors.light,
+                      }}
+                      labelStyle={{color: colors.background}}
+                      mode="contained"
+                      uppercase={false}>
+                      Ok
+                    </Button>
+                  </View>
+                </View>
+              </Paragraph>
+            </Dialog.Content>
+          </Dialog>
+        </Portal>
+      </View>
     </SafeAreaView>
   );
 };

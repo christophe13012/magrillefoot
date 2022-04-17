@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import {colors} from '../../../utils/colors';
+import {levels} from '../../../utils/utils';
 import auth from '@react-native-firebase/auth';
 import {
   Button,
@@ -15,18 +16,18 @@ import {useSelector} from 'react-redux';
 import {updateAvatar} from '../../../Services/http';
 import {firebase} from '@react-native-firebase/auth';
 import CreateAccount from './CreateAccount';
+import {connect, useDispatch} from 'react-redux';
+import {save_items} from '../../../Store/actions';
 
-const niveaux = [
-  {points: 0, name: 'Amateur'},
-  {points: 750, name: 'Espoir'},
-  {points: 1500, name: 'Pro'},
-  {points: 2500, name: 'International'},
-  {points: 3500, name: 'Crack'},
-  {points: 5000, name: "Ballon d'or"},
-  {points: 10000, name: 'Légende'},
-];
+const mapDispatchToProps = dispatch => {
+  return {
+    save_items: items => dispatch(save_items(items)),
+  };
+};
 
 const Profil = () => {
+  const dispatch = useDispatch();
+  const items = useSelector(state => state.items);
   const [avatarEmoji, setAvatarEmoji] = useState('😀');
   const [visible, setVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
@@ -37,25 +38,28 @@ const Profil = () => {
   const hideSignIn = async () => {
     setSignInVisible(false);
   };
-  const items = useSelector(state => state.items);
+
   const logout = () => {
     auth()
       .signOut()
       .then(() => console.log('User signed out!'));
   };
   useEffect(() => {
-    setAvatarEmoji(items.avatar ?? '😀');
-  }, []);
+    setAvatarEmoji(items.avatar);
+  }, [items.avatar]);
+  const reloadItems = newItems => {
+    dispatch(save_items(newItems));
+  };
   renderLevel = () => {
     const {xp: points} = {...items};
     let niveau = 1;
-    for (let index = 0; index < niveaux.length; index++) {
-      if (points >= niveaux[index].points) {
+    for (let index = 0; index < levels.length; index++) {
+      if (points >= levels[index].points) {
         niveau = index + 1;
       }
     }
-    const range = niveaux[niveau].points - niveaux[niveau - 1].points;
-    const points_en_cours = points - niveaux[niveau - 1].points;
+    const range = levels[niveau].points - levels[niveau].points;
+    const points_en_cours = points - levels[niveau].points;
     const percent = (points_en_cours / range) * 100;
     return (
       <View
@@ -117,7 +121,7 @@ const Profil = () => {
                   marginLeft: 2,
                   fontWeight: 'bold',
                 }}>
-                {niveaux[niveau - 1].name}
+                {levels[niveau].name}
               </Text>
             </View>
             <View
@@ -132,7 +136,7 @@ const Profil = () => {
               }}>
               <View style={{position: 'absolute', bottom: 11, zIndex: 500}}>
                 <Text style={{fontWeight: 'bold', color: colors.background}}>
-                  XP {points} / {niveaux[niveau].points}
+                  XP {points} / {levels[niveau].points}
                 </Text>
               </View>
               <View
@@ -327,11 +331,15 @@ const Profil = () => {
           visible={signInVisible}
           onDismiss={hideSignIn}
           style={{justifyContent: 'center'}}>
-          <CreateAccount />
+          <CreateAccount
+            items={items}
+            reloadItems={reloadItems}
+            hideModal={setSignInVisible}
+          />
         </Dialog>
       </Portal>
     </SafeAreaView>
   );
 };
 
-export default Profil;
+export default connect(null, mapDispatchToProps)(Profil);

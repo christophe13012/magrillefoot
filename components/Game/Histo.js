@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {colors} from '../../utils/colors';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
 
 const Histo = ({grilles}) => {
-  console.log('histo', grilles);
+  const navigation = useNavigation();
   return (
     <View style={{marginTop: 15}}>
       <Text style={{color: colors.black}}>Résultats et historique</Text>
@@ -17,26 +18,33 @@ const Histo = ({grilles}) => {
           marginTop: 8,
         }}
         style={{}}>
-        {Object.keys(grilles.matches)
-          .reverse()
-          .map((m, i) => {
-            return (
-              <View
-                key={i}
-                style={{
-                  backgroundColor: colors.back,
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
-                  paddingVertical: 15,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 100,
-                  marginRight: 15,
-                }}>
-                {i == 0 && (
+        {grilles &&
+          Object.keys(grilles.matches)
+            .sort((a, b) =>
+              grilles.matches[a].num > grilles.matches[b].num ? -1 : 1,
+            )
+            .map((m, i) => {
+              console.log('m', m);
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('HistoGrille', {id: m})}
+                  key={i}
+                  style={{
+                    backgroundColor: colors.back,
+                    borderRadius: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 100,
+                    marginRight: 15,
+                  }}>
                   <View
                     style={{
-                      backgroundColor: 'red',
+                      backgroundColor:
+                        grilles.matches[m].result < Date.now()
+                          ? 'red'
+                          : 'green',
                       height: 10,
                       width: 10,
                       borderRadius: 50,
@@ -44,21 +52,22 @@ const Histo = ({grilles}) => {
                       right: 8,
                       top: 8,
                     }}></View>
-                )}
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    marginTop: 5,
-                    color: colors.text,
-                  }}>
-                  Grille #{grilles.matches[m].num}
-                </Text>
-                <Text style={{color: colors.grey}}>
-                  {moment(new Date(grilles.matches[m].result)).format('DD/MM')}
-                </Text>
-              </View>
-            );
-          })}
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      marginTop: 5,
+                      color: colors.text,
+                    }}>
+                    Grille #{grilles.matches[m].num}
+                  </Text>
+                  <Text style={{color: colors.grey}}>
+                    {moment(new Date(grilles.matches[m].result)).format(
+                      'DD/MM',
+                    )}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
       </ScrollView>
     </View>
   );

@@ -2,13 +2,38 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {colors} from '../../utils/colors';
 import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-tiny-toast';
 
-const JouerButton = () => {
+const JouerButton = ({items, limit}) => {
   const navigation = useNavigation();
-
+  const jouer = () => {
+    if (Date.now() > limit) {
+      Toast.show(
+        "Désolé l'heure limite est dépassée ... La nouvelle grille arrive très rapidement 🔜",
+        {
+          position: 70,
+          containerStyle: {backgroundColor: colors.warning, width: '90%'},
+          textStyle: {color: 'white'},
+          duration: 4000,
+        },
+      );
+    } else if (items.coins < 50) {
+      Toast.show("Tu n'as pas assez de coins pour jouer", {
+        position: 70,
+        containerStyle: {
+          backgroundColor: colors.warning,
+          width: '90%',
+        },
+        textStyle: {color: 'white'},
+        duration: 2000,
+      });
+    } else {
+      navigation.navigate('Jouer');
+    }
+  };
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Jouer')}
+      onPress={jouer}
       style={{
         marginTop: 30,
         marginBottom: 20,

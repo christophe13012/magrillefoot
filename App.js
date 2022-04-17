@@ -27,6 +27,10 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import CustomHeader from './components/CustomHeader';
 import Jouer from './components/Game/Jouer';
 import {Root} from 'native-base';
+import Teams from './components/Teams';
+import Team from './components/Team';
+import MaGrille from './components/MaGrille';
+import HistoGrille from './components/HistoGrille';
 
 const persistConfig = {
   key: 'root',
@@ -48,6 +52,29 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name="Jouer"
         component={Jouer}
+        //options={{presentation: 'fullScreenModal'}}
+      />
+      <HomeStack.Screen
+        name="HistoGrille"
+        component={HistoGrille}
+        //options={{presentation: 'fullScreenModal'}}
+      />
+      <HomeStack.Screen
+        name="MaGrille"
+        component={MaGrille}
+        //options={{presentation: 'fullScreenModal'}}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+function TeamsStackScreen() {
+  return (
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
+      <HomeStack.Screen name="Amis" component={Teams} />
+      <HomeStack.Screen
+        name="Team"
+        component={Team}
         //options={{presentation: 'fullScreenModal'}}
       />
     </HomeStack.Navigator>
@@ -109,10 +136,10 @@ export default function App() {
                       }}
                     />
                     <Tab.Screen
-                      name="Team"
-                      component={Home}
+                      name="Teams"
+                      component={TeamsStackScreen}
                       options={{
-                        tabBarLabel: 'Teams',
+                        tabBarLabel: 'Amis',
                         tabBarLabelStyle: {color: colors.white},
                         tabBarIcon: ({color, size}) => (
                           <MaterialCommunityIcons

@@ -5,7 +5,6 @@ import moment from 'moment';
 import {Badge} from 'react-native-paper';
 
 const Details = ({grilles}) => {
-  console.log(grilles.matches[grilles.details.actual].num);
   return (
     <View
       style={{
@@ -24,7 +23,7 @@ const Details = ({grilles}) => {
           marginRight: 10,
         }}>
         <Text style={{color: 'white'}}>
-          #{grilles.matches[grilles.details.actual].num}
+          #{grilles && grilles?.matches[grilles.details.actual].num}
         </Text>
       </View>
       <View>

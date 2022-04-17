@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import {ScrollView, SafeAreaView, LogBox} from 'react-native';
 import {colors} from '../utils/colors';
 import Ballons from './Ballons';
 import Game from './Game/Game';
@@ -15,7 +8,6 @@ import {connect} from 'react-redux';
 import {firebase} from '@react-native-firebase/database';
 import {save_grilles, save_items} from '../Store/actions';
 import CustomHeader from './CustomHeader';
-import {Toast} from 'native-base';
 import BonusStore from './BonusStore';
 
 const mapStateToProps = state => {
@@ -67,7 +59,7 @@ class Home extends Component {
     this.refGrilles = this.refGrilles.on('value', snap => {
       if (snap) {
         const grilles = snap.val();
-        console.log('grille', grilles);
+        console.log('grilletest', grilles);
         if (grilles) {
           this.props.save_grilles(grilles);
         }
@@ -76,7 +68,7 @@ class Home extends Component {
   }
   render() {
     return (
-      <View>
+      <SafeAreaView>
         <CustomHeader onStore={() => this.setState({visible: true})} />
         <ScrollView
           contentContainerStyle={{
@@ -84,15 +76,15 @@ class Home extends Component {
             paddingBottom: 500,
           }}>
           <Ballons ballons={this.props.items.bingoballs} />
-          <Game grilles={this.props.grilles} />
-          <MesGrilles />
+          <Game grilles={this.props.grilles} items={this.props.items} />
+          <MesGrilles games={this.props.items.games} />
           <BonusStore
             visible={this.state.visible}
             setVisible={val => this.setState({visible: val})}
             inGame={0}
           />
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }

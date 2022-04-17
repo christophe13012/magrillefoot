@@ -5,7 +5,7 @@ import Details from './Details';
 import Histo from './Histo';
 import JouerButton from './JouerButton';
 
-const Game = ({navigation, grilles}) => {
+const Game = ({items, grilles}) => {
   return (
     <View
       style={{
@@ -44,7 +44,7 @@ const Game = ({navigation, grilles}) => {
         </View>
         <View style={{paddingHorizontal: 7}}>
           <Details grilles={grilles} />
-          <JouerButton />
+          <JouerButton items={items} limit={grilles.details.limit} />
           <Histo grilles={grilles} />
         </View>
       </View>
