@@ -8,14 +8,14 @@ import {
   ScrollView,
 } from 'react-native';
 import {colors} from '../utils/colors';
-import {Button} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {firebase} from '@react-native-firebase/auth';
 import {connect, useDispatch} from 'react-redux';
 import {save_items} from '../Store/actions';
 import {useNavigation} from '@react-navigation/native';
 import {codeByTeam, getTeam, removeTeam} from '../Services/http';
-import {levels} from '../utils/utils';
+import {levels, repartitionG} from '../utils/utils';
 import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-tiny-toast';
 import moment from 'moment';
@@ -40,7 +40,7 @@ const HistoGrille = ({route}) => {
   const [friends, setFriends] = useState([]);
   const items = useSelector(state => state.items);
   const played = grilles.matches[id]?.results
-    ? Object.keys(grilles.matches[id].results).length
+    ? Object.values(grilles.matches[id].results).filter(x => x != null).length
     : 0;
   return (
     <SafeAreaView
@@ -151,7 +151,7 @@ const HistoGrille = ({route}) => {
               </Text>
               {grilles.matches[id].results &&
                 grilles.matches[id].results?.[i] == 1 && (
-                  <Text style={{marginRight: 3}}>✅</Text>
+                  <Text style={{marginRight: 3}}>☑️</Text>
                 )}
             </View>
             <View
@@ -174,7 +174,7 @@ const HistoGrille = ({route}) => {
               </Text>
               {grilles.matches[id].results &&
                 grilles.matches[id].results?.[i] == 0 && (
-                  <Text style={{position: 'absolute'}}>✅</Text>
+                  <Text style={{position: 'absolute'}}>☑️</Text>
                 )}
             </View>
             <View
@@ -188,7 +188,7 @@ const HistoGrille = ({route}) => {
               }}>
               {grilles.matches[id].results &&
                 grilles.matches[id].results?.[i] == 2 && (
-                  <Text style={{marginLeft: 3}}>✅</Text>
+                  <Text style={{marginLeft: 3}}>☑️</Text>
                 )}
               <Text
                 numberOfLines={1}
@@ -235,11 +235,11 @@ const HistoGrille = ({route}) => {
               <Text>👉</Text>
             </View>
             <View style={{marginLeft: 5}}>
-              <Text style={{marginBottom: 5}}>1000€</Text>
-              <Text style={{marginBottom: 5}}>1000 points</Text>
-              <Text style={{marginBottom: 5}}>500 points</Text>
-              <Text style={{marginBottom: 5}}>150 points</Text>
-              <Text>50 points</Text>
+              {repartitionG.map((x, i) => (
+                <Text key={i} style={{marginBottom: 5}}>
+                  {x}
+                </Text>
+              ))}
             </View>
             {grilles.matches[id].repartition && (
               <View style={{marginLeft: 5}}>

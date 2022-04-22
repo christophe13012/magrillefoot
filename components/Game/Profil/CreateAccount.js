@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {colors} from '../../../utils/colors';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput, ActivityIndicator} from 'react-native-paper';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {Item, Form, Spinner} from 'native-base';
+import {FastField, Formik} from 'formik';
+import {Item, Form} from 'native-base';
 import {firebase} from '@react-native-firebase/auth';
 import Toast from 'react-native-tiny-toast';
 import {getItems, updateCoins, updateAllItems} from '../../../Services/http';
 
-const CreateAccount = ({items, hideModal, reloadItems}) => {
-  const [alreadyAnAccount, setAlreadyAnAccount] = useState(false);
+const CreateAccount = ({items, hideModal, reloadItems, onlySign = false}) => {
+  const [alreadyAnAccount, setAlreadyAnAccount] = useState(onlySign);
+  const [loading, setLoading] = useState(false);
   return !alreadyAnAccount ? (
     <Formik
       initialValues={{
@@ -206,14 +207,18 @@ const CreateAccount = ({items, hideModal, reloadItems}) => {
       }}
       onSubmit={async values => {
         try {
+          setLoading(true);
           const email = values.email.trim();
           const infos = await firebase
             .auth()
             .signInWithEmailAndPassword(email, values.password);
           const userItems = await getItems();
-          reloadItems(userItems);
+          if (!onlySign) {
+            reloadItems(userItems);
+          }
           hideModal(false);
         } catch (error) {
+          setLoading(false);
           console.log('error', error);
           Toast.show('Email ou mot de passe incorrect', {
             position: 70,
@@ -313,29 +318,44 @@ const CreateAccount = ({items, hideModal, reloadItems}) => {
                   {errors.password}
                 </Text>
               )}
-              <Button
-                style={{
-                  marginTop: 20,
-                  backgroundColor: colors.light,
-                  marginHorizontal: 20,
-                }}
-                labelStyle={{color: colors.background}}
-                mode="contained"
-                onPress={handleSubmit}>
-                Me connecter
-              </Button>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: 10,
-                }}>
-                <Button transparent onPress={() => setAlreadyAnAccount(false)}>
-                  <Text style={{color: 'black', fontSize: 12}}>
-                    Créer un nouveau compte ?
-                  </Text>
+              {loading ? (
+                <ActivityIndicator
+                  color={colors.background}
+                  style={{
+                    marginBottom: 20,
+                    marginTop: 20,
+                  }}
+                />
+              ) : (
+                <Button
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: colors.light,
+                    marginHorizontal: 20,
+                    marginBottom: 20,
+                  }}
+                  labelStyle={{color: colors.background}}
+                  mode="contained"
+                  onPress={handleSubmit}>
+                  Me connecter
                 </Button>
-              </View>
+              )}
+              {!onlySign && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginTop: 10,
+                  }}>
+                  <Button
+                    transparent
+                    onPress={() => setAlreadyAnAccount(false)}>
+                    <Text style={{color: 'black', fontSize: 12}}>
+                      Créer un nouveau compte ?
+                    </Text>
+                  </Button>
+                </View>
+              )}
             </View>
           </Form>
         </View>

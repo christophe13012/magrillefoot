@@ -82,7 +82,7 @@ const BonusStore = ({visible, setVisible, inGame}) => {
             </View>
             <View>
               <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                Couvres plus de résultats possibles sur tes grilles
+                Couvres le plus de résultats possibles sur tes grilles
               </Text>
             </View>
             <View style={{marginTop: 20, width: '50%'}}>

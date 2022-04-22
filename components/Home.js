@@ -9,6 +9,7 @@ import {firebase} from '@react-native-firebase/database';
 import {save_grilles, save_items} from '../Store/actions';
 import CustomHeader from './CustomHeader';
 import BonusStore from './BonusStore';
+import LottieView from 'lottie-react-native';
 
 const mapStateToProps = state => {
   return {
@@ -29,6 +30,7 @@ class Home extends Component {
   refItems = null;
   refGrilles = null;
   async componentDidMount() {
+    console.log('uid', firebase.auth().currentUser.uid);
     // ITEMS
     this.refItems && this.refItems.off('value', this.listenerItems);
     this.refItems = firebase
@@ -77,7 +79,10 @@ class Home extends Component {
           }}>
           <Ballons ballons={this.props.items.bingoballs} />
           <Game grilles={this.props.grilles} items={this.props.items} />
-          <MesGrilles games={this.props.items.games} />
+          <MesGrilles
+            grilles={this.props.grilles}
+            games={this.props.items.games}
+          />
           <BonusStore
             visible={this.state.visible}
             setVisible={val => this.setState({visible: val})}

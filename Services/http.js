@@ -257,6 +257,7 @@ export const validateGame = async (game, id, bonus) => {
   const items = snapshot.val();
   items.bonus = items.bonus - bonus;
   items.coins = items.coins - 50;
+  items.grilles = items.grilles - 1;
   const games = items.games && items.games[id] ? [...items.games[id]] : [];
   games.push(game);
   items.games = {[id]: games};

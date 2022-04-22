@@ -10,13 +10,21 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {colors} from '../../utils/colors';
-import {Button, Paragraph, Dialog, Portal} from 'react-native-paper';
+import {
+  Button,
+  Paragraph,
+  Dialog,
+  Portal,
+  IconButton,
+} from 'react-native-paper';
 import {validateGame} from '../../Services/http';
 import Toast from 'react-native-tiny-toast';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import BonusStore from '../BonusStore';
+import {repartitionG} from '../../utils/utils';
+import LottieView from 'lottie-react-native';
 
 const Jouer = ({params}) => {
   const items = useSelector(state => state.items);
@@ -157,14 +165,13 @@ const Jouer = ({params}) => {
               : c == 1
               ? {
                   fontSize: 18,
-                  marginLeft: 3,
+                  marginLeft: 5,
                 }
               : {
                   fontSize: 18,
+                  marginRight: 5,
                 }
-          }>
-          ⚽
-        </Text>
+          }></Text>
       );
     } else if (choix[i][0].includes(c)) {
       return (
@@ -187,7 +194,7 @@ const Jouer = ({params}) => {
         </Text>
       );
     } else {
-      return <View style={{width: 10}}></View>;
+      return <View style={{width: 5}}></View>;
     }
   };
   const validate = async () => {
@@ -324,6 +331,11 @@ const Jouer = ({params}) => {
           Grille à valider avant le{' '}
           {moment(new Date(grilles.details.limit)).format('DD/MM à H:mm')}
         </Text>
+        <Text style={{alignSelf: 'center', marginBottom: 10}}>
+          {played != 14
+            ? 14 - played + ' ' + buttonLabel
+            : 'Tu peux valider ta grille 🔥'}
+        </Text>
         {grilles.matches[grilles.details.actual].matches.map((m, i) => (
           <View
             key={i}
@@ -411,7 +423,7 @@ const Jouer = ({params}) => {
             uppercase={false}
             style={{backgroundColor: colors.light, flex: 1, marginRight: 10}}
             labelStyle={{color: colors.background}}>
-            Je crois au hasard 🤞
+            Je tente au hasard 🤞
           </Button>
           <Button
             onPress={reset}
@@ -476,38 +488,65 @@ const Jouer = ({params}) => {
               <Text>👉</Text>
             </View>
             <View style={{marginLeft: 5}}>
-              <Text style={{marginBottom: 5}}>1000€</Text>
-              <Text style={{marginBottom: 5}}>1000 points</Text>
-              <Text style={{marginBottom: 5}}>500 points</Text>
-              <Text style={{marginBottom: 5}}>150 points</Text>
-              <Text>50 points</Text>
+              {repartitionG.map((x, i) => (
+                <Text key={i} style={{marginBottom: 5}}>
+                  {x}
+                </Text>
+              ))}
             </View>
           </View>
         </View>
       </ScrollView>
       <BonusStore visible={visible} setVisible={setVisible} inGame={50} />
       <View>
-        <Portal>
-          <Dialog visible={visibleCongrats} onDismiss={hideDialogCongrats}>
-            <Dialog.Title>Bravo</Dialog.Title>
+        <Portal style={{}}>
+          <Dialog
+            visible={visibleCongrats}
+            onDismiss={hideDialogCongrats}
+            style={{height: 400}}>
+            {
+              <View style={{position: 'absolute', alignSelf: 'center'}}>
+                <Dialog.Title
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: 26,
+                    marginBottom: 5,
+                  }}>
+                  Bravo
+                </Dialog.Title>
+                <Text style={{textAlign: 'center', fontSize: 20}}>
+                  Ta grille est bien validée
+                </Text>
+              </View>
+            }
             <Dialog.Content>
               <Paragraph>
                 <View style={{alignItems: 'center'}}>
                   <View>
-                    <Text>Ta grille est bien validée</Text>
-                    <Text>Animation</Text>
+                    <LottieView
+                      loop={false}
+                      autoPlay
+                      style={{
+                        width: 400,
+                        height: 400,
+                      }}
+                      source={require('../../images/welldone.json')}
+                    />
                   </View>
-                  <View>
-                    <Text>
-                      C'est pas fini, tu peux encore valider {items.grilles}{' '}
-                      grilles
-                    </Text>
-                  </View>
-                  <View>
+                  <View style={{position: 'absolute', bottom: 0}}>
+                    {items.grilles > 0 && (
+                      <View>
+                        <Text style={{fontSize: 15, textAlign: 'center'}}>
+                          C'est pas fini, tu peux encore en valider{' '}
+                          {items.grilles}
+                        </Text>
+                      </View>
+                    )}
                     <Button
                       onPress={hideDialogCongrats}
                       style={{
-                        marginTop: 10,
+                        marginTop: 15,
                         backgroundColor: colors.light,
                       }}
                       labelStyle={{color: colors.background}}

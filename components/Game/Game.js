@@ -39,12 +39,12 @@ const Game = ({items, grilles}) => {
             borderTopLeftRadius: 10,
           }}>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>
-            1000€ à gagner !
+            3 chances de gagner 1000€ !
           </Text>
         </View>
         <View style={{paddingHorizontal: 7}}>
           <Details grilles={grilles} />
-          <JouerButton items={items} limit={grilles.details.limit} />
+          <JouerButton items={items} limit={grilles.details?.limit} />
           <Histo grilles={grilles} />
         </View>
       </View>

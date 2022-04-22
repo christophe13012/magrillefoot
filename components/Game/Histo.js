@@ -19,6 +19,7 @@ const Histo = ({grilles}) => {
         }}
         style={{}}>
         {grilles &&
+          grilles.matches &&
           Object.keys(grilles.matches)
             .sort((a, b) =>
               grilles.matches[a].num > grilles.matches[b].num ? -1 : 1,

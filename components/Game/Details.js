@@ -23,7 +23,7 @@ const Details = ({grilles}) => {
           marginRight: 10,
         }}>
         <Text style={{color: 'white'}}>
-          #{grilles && grilles?.matches[grilles.details.actual].num}
+          #{grilles && grilles?.matches[grilles.details?.actual].num}
         </Text>
       </View>
       <View>

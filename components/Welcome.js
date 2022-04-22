@@ -5,15 +5,16 @@ import {
   SafeAreaView,
   TextInput,
   StyleSheet,
-  Dimensions,
+  Image,
 } from 'react-native';
 import {colors} from '../utils/colors';
-import {Button} from 'react-native-paper';
+import {Button, Dialog, ActivityIndicator} from 'react-native-paper';
 import {initalizeItems, isNameTaken, saveName} from '../Services/http';
 import Toast from 'react-native-tiny-toast';
 import auth from '@react-native-firebase/auth';
 import {connect, useDispatch} from 'react-redux';
 import {save_items} from '../Store/actions';
+import CreateAccount from './Game/Profil/CreateAccount';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -23,11 +24,18 @@ const mapDispatchToProps = dispatch => {
 
 const Welcome = () => {
   const dispatch = useDispatch();
+  const [signInVisible, setSignInVisible] = useState(false);
+  const hideSignIn = async () => {
+    setSignInVisible(false);
+  };
   const [name, onChangeName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSaveName = async () => {
+    setLoading(true);
     const regex = /^([a-zA-Z0-9-_]{3,20})$/;
     if (!name.match(regex)) {
+      setLoading(false);
       Toast.show(
         'Votre nom doit faire entre 3 et 20 caractères sans espaces et ne comporter que des nombres, chiffres et _ ou -',
         {
@@ -46,7 +54,9 @@ const Welcome = () => {
       let infos = await auth().signInAnonymously();
       const items = await initalizeItems(infos.user.uid, name);
       dispatch(save_items(items));
+      setLoading(false);
     } else {
+      setLoading(false);
       Toast.show(
         "Hey, ce nom est déja utilisé, merci d'en choisir un autre 😉",
         {
@@ -60,17 +70,46 @@ const Welcome = () => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: colors.backBack,
+        backgroundColor: colors.background,
         flex: 1,
       }}>
-      <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{fontWeight: '500', fontSize: 22, color: 'white'}}>
-          Bienvenue sur magrillefoot
-        </Text>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Image
+          style={{
+            width: 225,
+            height: 225,
+          }}
+          source={require('../images/logo.png')}
+        />
       </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{fontWeight: '500', fontSize: 22, color: 'white'}}>
-          Choisis ton nom et c'est parti !
+        <Text style={{fontWeight: '500', fontSize: 24, color: 'white'}}>
+          Bienvenue
+        </Text>
+        <Text
+          style={{
+            fontWeight: '500',
+            fontSize: 18,
+            color: 'white',
+            marginBottom: 15,
+            marginTop: 15,
+          }}>
+          Tu as déjà un compte ?
+        </Text>
+        <Button
+          mode="contained"
+          color={colors.light}
+          onPress={() => setSignInVisible(true)}>
+          Je me connecte
+        </Button>
+        <Text
+          style={{
+            fontWeight: '500',
+            fontSize: 18,
+            color: 'white',
+            marginTop: 25,
+          }}>
+          Sinon choisis un nom et c'est parti !
         </Text>
         <TextInput
           style={styles.input}
@@ -78,14 +117,28 @@ const Welcome = () => {
           value={name}
           placeholder="Nom d'utilisateur"
         />
-        <Button
-          icon="soccer"
-          mode="contained"
-          color={colors.backLight}
-          onPress={handleSaveName}>
-          Valider
-        </Button>
+        {loading ? (
+          <ActivityIndicator color={colors.white} style={{marginTop: 10}} />
+        ) : (
+          <Button
+            mode="contained"
+            color={colors.light}
+            onPress={handleSaveName}>
+            Valider
+          </Button>
+        )}
       </View>
+      <Dialog
+        visible={signInVisible}
+        onDismiss={hideSignIn}
+        style={{justifyContent: 'center'}}>
+        <CreateAccount
+          items={false}
+          reloadItems={false}
+          onlySign={true}
+          hideModal={setSignInVisible}
+        />
+      </Dialog>
     </SafeAreaView>
   );
 };

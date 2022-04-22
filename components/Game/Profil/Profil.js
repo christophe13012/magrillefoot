@@ -45,6 +45,9 @@ const Profil = () => {
       .then(() => console.log('User signed out!'));
   };
   useEffect(() => {
+    //logout();
+  }, []);
+  useEffect(() => {
     setAvatarEmoji(items.avatar);
   }, [items.avatar]);
   const reloadItems = newItems => {

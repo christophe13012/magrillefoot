@@ -8,18 +8,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {colors} from '../utils/colors';
-import {Button} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {firebase} from '@react-native-firebase/auth';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import {save_items} from '../Store/actions';
 import {useNavigation} from '@react-navigation/native';
-import {codeByTeam, getTeam, removeTeam} from '../Services/http';
-import {levels} from '../utils/utils';
-import Clipboard from '@react-native-community/clipboard';
-import Toast from 'react-native-tiny-toast';
 import moment from 'moment';
-import {date} from 'yup';
+import {repartitionG} from '../utils/utils';
+import {IconButton} from 'react-native-paper';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -31,63 +26,107 @@ const MaGrille = ({route}) => {
   const grilles = useSelector(state => state.grilles);
   const {id, game} = route.params;
   const navigation = useNavigation();
-  const [team, setTeam] = useState([]);
-  const [delMode, setDelMode] = useState(false);
-  const [teamName, setTeamName] = useState('');
-  const dispatch = useDispatch();
-  const [mode, setMode] = useState(1);
-  const [friends, setFriends] = useState([]);
-  const items = useSelector(state => state.items);
-  const renderChoice = (c, i) => {
-    console.log('GAME[id]', i, c, game[0]);
-    if (game[i] && game[i].includes(c) && !game[i][0].includes(c)) {
-      return (
-        <Text
-          style={
-            c == 0
-              ? {
-                  fontSize: 18,
-                  position: 'absolute',
-                }
-              : c == 1
-              ? {
-                  fontSize: 18,
-                  marginLeft: 3,
-                }
-              : {
-                  fontSize: 18,
-                }
-          }>
-          ⚽
-        </Text>
-      );
-    } else if (game[i] && game[i][0].includes(c)) {
-      return (
-        <Text
-          style={
-            c == 0
-              ? {
-                  fontSize: 22,
-                  position: 'absolute',
-                }
-              : c == 1
-              ? {
-                  fontSize: 22,
-                }
-              : {
-                  fontSize: 22,
-                }
-          }>
-          🍀
-        </Text>
-      );
+  renderBackground = (i, index) => {
+    if (game[i].includes(index)) {
+      if (index == grilles.matches[id].results?.[i]) {
+        return colors.light;
+      } else {
+        //return colors.danger;
+        return colors.light;
+      }
     } else {
-      return <View style={{width: 10}}></View>;
+      return colors.backLight;
+    }
+  };
+  const renderChoice = (i, index) => {
+    if (grilles.matches[id].results?.[i] == null) {
+      return;
+    }
+    if (game[i].includes(index)) {
+      if (index == grilles.matches[id].results?.[i]) {
+        return (
+          <Text
+            style={
+              index == 0
+                ? {
+                    fontSize: 15,
+                    position: 'absolute',
+                  }
+                : index == 1
+                ? {
+                    fontSize: 15,
+                    marginRight: 3,
+                  }
+                : {
+                    fontSize: 15,
+                    marginLeft: 3,
+                  }
+            }>
+            ✅
+          </Text>
+        );
+      } else {
+        return (
+          <Text
+            style={
+              index == 0
+                ? {
+                    fontSize: 15,
+                    position: 'absolute',
+                  }
+                : index == 1
+                ? {
+                    fontSize: 15,
+                    marginRight: 3,
+                  }
+                : {
+                    fontSize: 15,
+                    marginLeft: 3,
+                  }
+            }>
+            ❌
+          </Text>
+        );
+      }
+    } else {
+      if (grilles.matches[id].results?.[i] == index) {
+        return (
+          <Text
+            style={
+              index == 0
+                ? {
+                    fontSize: 15,
+                    position: 'absolute',
+                  }
+                : index == 1
+                ? {
+                    fontSize: 15,
+                    marginRight: 3,
+                  }
+                : {
+                    fontSize: 15,
+                    marginLeft: 3,
+                  }
+            }>
+            ☑️
+          </Text>
+        );
+      }
+    }
+  };
+  const renderResult = wrong => {
+    if (repartitionG[wrong]) {
+      return repartitionG[wrong];
+    } else {
+      return '15 points';
     }
   };
   const played = grilles.matches[id]?.results
-    ? Object.keys(grilles.matches[id].results).length
+    ? Object.values(grilles.matches[id].results).filter(x => x != null).length
     : 0;
+  const wrong = grilles.matches[id].results.filter(
+    (x, i) => !game[i].includes(x),
+  ).length;
   return (
     <SafeAreaView
       style={{
@@ -177,7 +216,7 @@ const MaGrille = ({route}) => {
             }}>
             <View
               style={{
-                backgroundColor: colors.backLight,
+                backgroundColor: renderBackground(i, 1),
                 borderRadius: 5,
                 flex: 1,
                 alignItems: 'center',
@@ -194,16 +233,12 @@ const MaGrille = ({route}) => {
                 }}>
                 {m.home}
               </Text>
-              {grilles.matches[id].results &&
-                grilles.matches[id].results?.[i] == 1 && (
-                  <Text style={{marginRight: 3}}>✅</Text>
-                )}
-              {renderChoice(1, i)}
+              {renderChoice(i, 1)}
             </View>
             <View
               style={{
                 borderRadius: 5,
-                backgroundColor: colors.backLight,
+                backgroundColor: renderBackground(i, 0),
                 marginHorizontal: '2%',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -218,25 +253,18 @@ const MaGrille = ({route}) => {
                 }}>
                 Nul
               </Text>
-              {grilles.matches[id].results &&
-                grilles.matches[id].results?.[i] == 0 && (
-                  <Text style={{position: 'absolute'}}>✅</Text>
-                )}
+              {renderChoice(i, 0)}
             </View>
             <View
               style={{
                 borderRadius: 5,
-                backgroundColor: colors.backLight,
+                backgroundColor: renderBackground(i, 2),
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexDirection: 'row',
                 flex: 1,
               }}>
-              {grilles.matches[id].results &&
-                grilles.matches[id].results?.[i] == 2 && (
-                  <Text style={{marginLeft: 3}}>✅</Text>
-                )}
-              {renderChoice(2, i)}
+              {renderChoice(i, 2)}
               <Text
                 numberOfLines={1}
                 style={{
@@ -250,6 +278,33 @@ const MaGrille = ({route}) => {
             </View>
           </View>
         ))}
+        <View style={{}}>
+          <Text
+            style={{
+              fontWeight: '500',
+              fontSize: 18,
+              marginLeft: 10,
+              color: colors.black,
+              marginTop: 20,
+            }}>
+            Mes résultats
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginLeft: 20,
+              marginTop: 10,
+            }}>
+            <View style={{}}>
+              <Text style={{}}>
+                {wrong} fautes ➡️{' '}
+                {played < 14
+                  ? 14 - played + ' matches restants à jouer'
+                  : renderResult(wrong)}
+              </Text>
+            </View>
+          </View>
+        </View>
         <View style={{marginBottom: 50}}>
           <Text
             style={{
@@ -275,18 +330,18 @@ const MaGrille = ({route}) => {
               <Text>4 fautes</Text>
             </View>
             <View style={{marginLeft: 5}}>
-              <Text style={{marginBottom: 5}}>👉</Text>
-              <Text style={{marginBottom: 5}}>👉</Text>
-              <Text style={{marginBottom: 5}}>👉</Text>
-              <Text style={{marginBottom: 5}}>👉</Text>
-              <Text>👉</Text>
+              <Text style={{marginBottom: 5}}>➡️</Text>
+              <Text style={{marginBottom: 5}}>➡️</Text>
+              <Text style={{marginBottom: 5}}>➡️</Text>
+              <Text style={{marginBottom: 5}}>➡️</Text>
+              <Text>➡️</Text>
             </View>
             <View style={{marginLeft: 5}}>
-              <Text style={{marginBottom: 5}}>1000€</Text>
-              <Text style={{marginBottom: 5}}>1000 points</Text>
-              <Text style={{marginBottom: 5}}>500 points</Text>
-              <Text style={{marginBottom: 5}}>150 points</Text>
-              <Text>50 points</Text>
+              {repartitionG.map((x, i) => (
+                <Text key={i} style={{marginBottom: 5}}>
+                  {x}
+                </Text>
+              ))}
             </View>
             {grilles.matches[id].repartition && (
               <View style={{marginLeft: 5}}>

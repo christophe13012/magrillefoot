@@ -7,6 +7,15 @@ import Toast from 'react-native-tiny-toast';
 const JouerButton = ({items, limit}) => {
   const navigation = useNavigation();
   const jouer = () => {
+    if (items.grilles == 0) {
+      Toast.show('Désolé, tu as déjà validé tes 3 grilles', {
+        position: 70,
+        containerStyle: {backgroundColor: colors.warning, width: '90%'},
+        textStyle: {color: 'white'},
+        duration: 4000,
+      });
+      return;
+    }
     if (Date.now() > limit) {
       Toast.show(
         "Désolé l'heure limite est dépassée ... La nouvelle grille arrive très rapidement 🔜",
