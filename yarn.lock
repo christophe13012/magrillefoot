@@ -1311,6 +1311,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/database/-/database-14.2.1.tgz"
   "version" "14.2.1"
 
+"@react-native-firebase/messaging@^14.2.2":
+  "integrity" "sha512-0755cINvakKZ4lnyUr7weNPbhOSS9FpvR9VD20XrgBGBCkCy84NUSq51y2+Ita5lvU+Ni2Q++Z/Y1h/2BqjLlw=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-14.2.2.tgz"
+  "version" "14.2.2"
+
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"

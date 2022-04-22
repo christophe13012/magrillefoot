@@ -10,6 +10,8 @@ import {save_grilles, save_items} from '../Store/actions';
 import CustomHeader from './CustomHeader';
 import BonusStore from './BonusStore';
 import LottieView from 'lottie-react-native';
+import messaging from '@react-native-firebase/messaging';
+import {checkNeedSaveToken, saveToken} from '../Services/http';
 
 const mapStateToProps = state => {
   return {
@@ -30,6 +32,7 @@ class Home extends Component {
   refItems = null;
   refGrilles = null;
   async componentDidMount() {
+    this.requestUserPermission();
     console.log('uid', firebase.auth().currentUser.uid);
     // ITEMS
     this.refItems && this.refItems.off('value', this.listenerItems);
@@ -68,6 +71,27 @@ class Home extends Component {
       }
     });
   }
+  getFcmToken = async () => {
+    const fcmToken = await messaging().getToken();
+    if (fcmToken) {
+      return fcmToken;
+    } else {
+      console.log('Failed', 'No token received');
+    }
+  };
+  requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      let token = await this.getFcmToken();
+      const needSaveToken = await checkNeedSaveToken(token);
+      if (needSaveToken) {
+        await saveToken(token);
+      }
+    }
+  };
   render() {
     return (
       <SafeAreaView>

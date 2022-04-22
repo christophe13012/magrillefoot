@@ -263,3 +263,29 @@ export const validateGame = async (game, id, bonus) => {
   items.games = {[id]: games};
   ref.set(items);
 };
+
+export const checkNeedSaveToken = async token => {
+  const user = firebase.auth().currentUser;
+  const ref = database.ref(`/tokens/${user.uid}`);
+  const snapshot = await ref.once('value');
+  const data = snapshot.val();
+  if (!data) {
+    return true;
+  }
+  if (data && data.includes(token)) {
+    return false;
+  }
+  if (data && !data.includes(token)) {
+    return true;
+  }
+};
+
+export const saveToken = async token => {
+  const user = firebase.auth().currentUser;
+  const ref = database.ref(`/tokens/${user.uid}`);
+  const snapshot = await ref.once('value');
+  const data = snapshot.val();
+  const tokens = data ? [...data] : [];
+  tokens.push(token);
+  ref.set(tokens);
+};

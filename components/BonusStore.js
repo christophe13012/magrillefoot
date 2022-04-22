@@ -173,7 +173,7 @@ const BonusStore = ({visible, setVisible, inGame}) => {
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>
-              <Text style={{color: colors.background}}>Retour</Text>
+              <Text style={{color: colors.background}}>Fermer</Text>
             </Button>
           </Dialog.Actions>
         </Dialog>

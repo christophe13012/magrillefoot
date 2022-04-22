@@ -14,6 +14,7 @@ const CustomHeader = ({ballons, onStore}) => {
         flexDirection: 'row',
         paddingHorizontal: 10,
         paddingBottom: 20,
+        paddingTop: 10,
       }}>
       <View>
         <Text
