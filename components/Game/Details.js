@@ -23,14 +23,18 @@ const Details = ({grilles}) => {
           marginRight: 10,
         }}>
         <Text style={{color: 'white'}}>
-          #{grilles && grilles?.matches[grilles.details?.actual].num}
+          #
+          {grilles &&
+            grilles.matches &&
+            grilles.matches[grilles.details?.actual].num}
         </Text>
       </View>
       <View>
         <Text style={{color: colors.black}}>Grille en cours</Text>
         <Text style={{color: colors.black}}>
           à valider avant le{' '}
-          {moment(new Date(grilles.details.limit)).format('DD/MM à H:mm')}
+          {grilles.details &&
+            moment(new Date(grilles.details.limit)).format('DD/MM à H:mm')}
         </Text>
       </View>
     </View>

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {colors} from '../../utils/colors';
@@ -71,8 +72,21 @@ const Jouer = ({params}) => {
       game[i] = game[i].filter(x => x != c || Array.isArray(x));
     } else {
       if (game[i].length > 1) {
+        if ([12, 13].includes(i)) {
+          Toast.show(
+            'Tu ne peux pas poser de 💊 sur les 2 derniers matches ⛔',
+            {
+              position: 70,
+              containerStyle: {backgroundColor: colors.warning, width: '90%'},
+              textStyle: {color: 'white'},
+              duration: 2000,
+            },
+          );
+          return;
+        }
+
         if (items.bonus - bonusEnCours < 1) {
-          Toast.show("Tu n'as pas assez de 🍀 pour couvrir ce résultat", {
+          Toast.show("Tu n'as pas assez de 💊 pour couvrir ce résultat", {
             position: 70,
             containerStyle: {backgroundColor: colors.warning, width: '90%'},
             textStyle: {color: 'white'},
@@ -90,7 +104,7 @@ const Jouer = ({params}) => {
           });
         });
         if (countBonus > 5) {
-          Toast.show('Tu as atteint le max de 🍀 pour cette grille', {
+          Toast.show('Tu as atteint le max de 💊 pour cette grille', {
             position: 70,
             containerStyle: {backgroundColor: colors.warning, width: '90%'},
             textStyle: {color: 'white'},
@@ -190,7 +204,7 @@ const Jouer = ({params}) => {
                   fontSize: 22,
                 }
           }>
-          🍀
+          💊
         </Text>
       );
     } else {
@@ -220,20 +234,17 @@ const Jouer = ({params}) => {
         backgroundColor: colors.background,
         flex: 1,
       }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 10,
-            marginTop: 10,
-          }}
-          source={require('../../images/chevron-left.png')}
-        />
-      </TouchableOpacity>
+      <IconButton
+        icon="chevron-left"
+        color={colors.white}
+        size={30}
+        onPress={() => navigation.goBack()}
+        style={{position: 'absolute', zIndex: 100}}
+      />
       <View
         style={{
-          height: 100,
+          marginTop: 7,
+          height: 110,
           alignItems: 'flex-start',
           justifyContent: 'center',
         }}>
@@ -258,15 +269,8 @@ const Jouer = ({params}) => {
                 marginRight: 5,
                 color: colors.white,
               }}>
-              {items.coins - 50}
+              {items.coins - 50} 💎
             </Text>
-            <Image
-              style={{
-                width: 25,
-                height: 25,
-              }}
-              source={require('../../images/coin.png')}
-            />
           </View>
           <TouchableOpacity
             onPress={() => setVisible(true)}
@@ -293,7 +297,7 @@ const Jouer = ({params}) => {
             }}>
             {items.bonus - bonusEnCours}
           </Text>
-          <Text style={{fontSize: 22, marginLeft: 1}}>🍀</Text>
+          <Text style={{fontSize: 22, marginLeft: 1}}>💊</Text>
         </View>
         <Text
           style={{
@@ -305,16 +309,24 @@ const Jouer = ({params}) => {
           }}>
           À toi de remplir la grille
         </Text>
-        <Text
+        <View
           style={{
-            fontWeight: '500',
-            fontSize: 11,
-            marginLeft: 10,
-            color: colors.white,
+            alignSelf: 'center',
+            paddingHorizontal: 20,
           }}>
-          N'oublies pas d'utiliser tes 🍀 pour couvrir le plus de résultats
-          possibles
-        </Text>
+          <Text
+            style={{
+              fontWeight: '500',
+              fontSize: 12,
+              color: colors.white,
+              marginTop: 5,
+              textAlign: 'center',
+              lineHeight: 15,
+            }}>
+            Dopes ta grille avec tes 💊 pour couvrir le plus de résultats
+            possibles !
+          </Text>
+        </View>
       </View>
       <View style={{height: 20, backgroundColor: colors.white}}>
         <View
@@ -490,7 +502,11 @@ const Jouer = ({params}) => {
             <View style={{marginLeft: 5}}>
               {repartitionG.map((x, i) => (
                 <Text key={i} style={{marginBottom: 5}}>
-                  {x}
+                  {i == 0
+                    ? Platform.os == 'ios'
+                      ? grilles.details.premier.ios
+                      : grilles.details.premier.android
+                    : x}
                 </Text>
               ))}
             </View>

@@ -13,11 +13,17 @@ import {
 } from 'react-native-paper';
 import EmojiPicker from 'react-native-emoji-picker-staltz';
 import {useSelector} from 'react-redux';
-import {updateAvatar} from '../../../Services/http';
+import {
+  checkNeedSaveToken,
+  saveToken,
+  updateAvatar,
+} from '../../../Services/http';
 import {firebase} from '@react-native-firebase/auth';
 import CreateAccount from './CreateAccount';
 import {connect, useDispatch} from 'react-redux';
 import {save_items} from '../../../Store/actions';
+import BonusStore from '../../BonusStore';
+import messaging from '@react-native-firebase/messaging';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -29,7 +35,9 @@ const Profil = () => {
   const dispatch = useDispatch();
   const items = useSelector(state => state.items);
   const [avatarEmoji, setAvatarEmoji] = useState('😀');
+  const [notif, setNotif] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [visibleStore, setVisibleStore] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
   const hideDialog = async () => {
     setVisible(false);
@@ -46,13 +54,52 @@ const Profil = () => {
   };
   useEffect(() => {
     //logout();
+    // Check notif
+    checkNotif();
   }, []);
+
+  const checkNotif = async () => {
+    const hasPermission = await messaging().hasPermission();
+    console.log(hasPermission);
+    if (hasPermission == -1) {
+      setNotif(true);
+    } else {
+      setNotif(false);
+    }
+  };
+
   useEffect(() => {
     setAvatarEmoji(items.avatar);
   }, [items.avatar]);
+
   const reloadItems = newItems => {
     dispatch(save_items(newItems));
   };
+
+  const getFcmToken = async () => {
+    const fcmToken = await messaging().getToken();
+    if (fcmToken) {
+      return fcmToken;
+    } else {
+      console.log('Failed', 'No token received');
+    }
+  };
+
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      let token = await getFcmToken();
+      const needSaveToken = await checkNeedSaveToken(token);
+      if (needSaveToken) {
+        await saveToken(token);
+      }
+    }
+    setNotif(false);
+  };
+
   renderLevel = () => {
     const {xp: points} = {...items};
     let niveau = 1;
@@ -174,7 +221,6 @@ const Profil = () => {
       </View>
     );
   };
-  console.log('tesst', firebase.auth().currentUser);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View
@@ -216,42 +262,79 @@ const Profil = () => {
           flex: 1,
           paddingVertical: 20,
         }}>
-        <View
-          style={{
-            backgroundColor: colors.background,
-            height: 80,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginHorizontal: 5,
-            borderRadius: 10,
-          }}>
+        <View>
           <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text
-              style={{color: colors.light, fontWeight: 'bold', fontSize: 20}}>
-              100
-            </Text>
-            <Text style={{color: 'white', marginTop: 10}}>grilles jouées</Text>
+            style={{
+              backgroundColor: colors.background,
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              marginHorizontal: 5,
+              borderRadius: 10,
+              marginBottom: 50,
+              height: 75,
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: 10,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginRight: 5,
+                    color: colors.white,
+                  }}>
+                  {items.coins} 💎
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <TouchableOpacity
+                  onPress={() => setVisibleStore(true)}
+                  style={{
+                    backgroundColor: colors.light,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: 20,
+                    width: 20,
+                    borderRadius: 5,
+                    marginRight: 5,
+                  }}>
+                  <Text
+                    style={{fontSize: 16, fontWeight: 'bold', marginBottom: 2}}>
+                    +
+                  </Text>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginRight: 3,
+                    color: colors.white,
+                    marginLeft: 3,
+                  }}>
+                  {items.bonus}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    marginLeft: 1,
+                  }}>
+                  💊
+                </Text>
+              </View>
+            </View>
           </View>
-          <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text
-              style={{color: colors.light, fontWeight: 'bold', fontSize: 20}}>
-              7
-            </Text>
-            <Text style={{color: 'white', marginTop: 10}}>amis</Text>
-          </View>
-          <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text
-              style={{color: colors.light, fontWeight: 'bold', fontSize: 20}}>
-              1
-            </Text>
-            <Text style={{color: 'white', marginTop: 10}}>teams</Text>
-          </View>
+          {renderLevel()}
         </View>
-        {renderLevel()}
         <View>
           {firebase.auth().currentUser &&
           !firebase.auth().currentUser.isAnonymous ? (
@@ -281,17 +364,8 @@ const Profil = () => {
                   alignItems: 'center',
                 }}>
                 <Text style={{color: 'white', fontWeight: 'bold'}}>
-                  Envie de gagner facilement 300
+                  Envie de gagner facilement 300 💎
                 </Text>
-                <Image
-                  style={{
-                    width: 20,
-                    height: 20,
-                    marginLeft: 3,
-                    marginRight: 5,
-                  }}
-                  source={require('../../../images/coin.png')}
-                />
                 <Text style={{color: 'white', fontWeight: 'bold'}}>?</Text>
               </View>
               <Button
@@ -310,6 +384,19 @@ const Profil = () => {
           )}
         </View>
       </View>
+      {notif && (
+        <Button
+          style={{
+            backgroundColor: colors.background,
+            marginHorizontal: 20,
+            marginBottom: 10,
+          }}
+          icon="bell"
+          mode="contained"
+          onPress={requestUserPermission}>
+          Activer les notifications
+        </Button>
+      )}
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog} style={{}}>
           <EmojiPicker
@@ -341,6 +428,11 @@ const Profil = () => {
           />
         </Dialog>
       </Portal>
+      <BonusStore
+        visible={visibleStore}
+        setVisible={setVisibleStore}
+        inGame={0}
+      />
     </SafeAreaView>
   );
 };

@@ -7,19 +7,26 @@ import {connect, useDispatch} from 'react-redux';
 import {save_items} from '../Store/actions';
 import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-tiny-toast';
-import {Button, Dialog, Portal, IconButton} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Portal,
+  IconButton,
+  ActivityIndicator,
+} from 'react-native-paper';
 import {Input, Item} from 'native-base';
 import {levels} from '../utils/utils';
+import axios from 'axios';
 
 const mapDispatchToProps = dispatch => {
   return {
     save_items: items => dispatch(save_items(items)),
   };
 };
-const Friends = ({friends}) => {
-  const dispatch = useDispatch();
+const Friends = ({friends, name}) => {
   const [visibleIn, setVisibleIn] = useState(false);
   const [visibleOut, setVisibleOut] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [code, setCode] = useState('');
   const hideDialog = async () => {
     setVisibleIn(false);
@@ -50,6 +57,20 @@ const Friends = ({friends}) => {
     });
   };
   const doAddFriend = async () => {
+    setLoading(true);
+    if (code == '') {
+      Toast.show("Oups, je crois que ce joueur n'existe pas 🧐", {
+        position: 70,
+        containerStyle: {
+          backgroundColor: colors.warning,
+          width: '90%',
+        },
+        textStyle: {color: 'white'},
+        duration: 2000,
+      });
+      setLoading(false);
+      return;
+    }
     const friend = await addFriend(code.trim().toLowerCase());
     if (friend === 'inconnu') {
       Toast.show("Oups, je crois que ce joueur n'existe pas 🧐", {
@@ -72,6 +93,19 @@ const Friends = ({friends}) => {
         duration: 2000,
       });
     } else {
+      console.log('FRIEND', friend);
+      // Give reward
+      await axios
+        .post(
+          'https://us-central1-magrillefoot.cloudfunctions.net/friendAdded',
+          {
+            uid: friend,
+            name,
+          },
+        )
+        .catch(error => {
+          console.log('ERROR', error);
+        });
       Toast.show('Ton ami a bien été ajouté 😉', {
         position: 70,
         containerStyle: {
@@ -82,6 +116,7 @@ const Friends = ({friends}) => {
         duration: 2000,
       });
     }
+    setLoading(false);
   };
   const delFriend = async friendUid => {
     await deleteFriend(friendUid);
@@ -114,15 +149,7 @@ const Friends = ({friends}) => {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Text>Ajoute un ami pour recevoir 100 coins</Text>
-          <Image
-            style={{
-              width: 15,
-              height: 15,
-              marginLeft: 3,
-            }}
-            source={require('../images/coin.png')}
-          />
+          <Text>Ajoute un ami pour recevoir 150 💎</Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Button
@@ -210,8 +237,8 @@ const Friends = ({friends}) => {
               </View>
             ))
           ) : (
-            <View>
-              <Text>Vous n'avez encore aucun ami connecté à l'app</Text>
+            <View style={{alignItems: 'center', marginTop: 20}}>
+              <Text>Tu n'as encore aucun ami connecté à l'app</Text>
             </View>
           )}
         </View>
@@ -224,7 +251,7 @@ const Friends = ({friends}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{}}>Saisi le code que tu as reçu</Text>
+            <Text>Saisi le code que tu as reçu</Text>
             <View
               style={{
                 alignSelf: 'center',
@@ -237,11 +264,19 @@ const Friends = ({friends}) => {
                 style={{width: 120, backgroundColor: 'white', height: 35}}>
                 <Input placeholder="Code" value={code} onChangeText={setCode} />
               </Item>
-              <Button
-                style={{backgroundColor: colors.light, marginLeft: 5}}
-                onPress={doAddFriend}>
-                <Text style={{color: colors.background}}>Valider</Text>
-              </Button>
+              {loading ? (
+                <ActivityIndicator
+                  color={colors.background}
+                  style={{marginLeft: 30}}
+                />
+              ) : (
+                <Button
+                  mode="contained"
+                  style={{backgroundColor: colors.light, marginLeft: 5}}
+                  onPress={doAddFriend}>
+                  <Text style={{color: colors.background}}>Valider</Text>
+                </Button>
+              )}
             </View>
           </Dialog>
           <Dialog
@@ -279,6 +314,7 @@ const Friends = ({friends}) => {
                 </Text>
               </Item>
               <Button
+                mode="contained"
                 style={{backgroundColor: colors.light, marginLeft: 5}}
                 onPress={() => copyToClipboard(uniqueId)}>
                 <Text style={{color: colors.background}}>Copier</Text>
@@ -291,15 +327,7 @@ const Friends = ({friends}) => {
                 justifyContent: 'center',
                 marginTop: 10,
               }}>
-              <Text>Dès qu'il se connectera, tu recevras 100</Text>
-              <Image
-                style={{
-                  width: 15,
-                  height: 15,
-                  marginLeft: 3,
-                }}
-                source={require('../images/coin.png')}
-              />
+              <Text>Dès qu'il se connectera, tu recevras 100 💎</Text>
             </View>
           </Dialog>
         </Portal>

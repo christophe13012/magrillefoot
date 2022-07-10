@@ -65,6 +65,14 @@ export const initalizeItems = async (userID, name) => {
     xp: '0',
   };
   database.ref('items/' + userID).set(items);
+  const battle = {
+    uid: userID,
+    name,
+    level: 0,
+    last: false,
+    moyenne: false,
+  };
+  database.ref(`battle/${userID}`).set(battle);
   return items;
 };
 
@@ -87,7 +95,7 @@ export const updateBonus = async bonus => {
   const ref = database.ref(`/items/${firebase.auth().currentUser.uid}`);
   const snapshot = await ref.once('value');
   let data = {...snapshot.val()};
-  data.coins = data.coins - 50;
+  data.coins = data.coins - 100;
   data.bonus = data.bonus + bonus;
   ref.set(data);
 };
@@ -136,9 +144,13 @@ export const addFriend = async uniqueId => {
   const ref = database.ref(`/battle/${uid}`);
   const snapshot = await ref.once('value');
   const friendsStats = snapshot.val();
+  console.log('friendsStats', friendsStats);
+
   const refAdd = database.ref(`/friends/${firebase.auth().currentUser.uid}`);
   const snapshotPotos = await refAdd.once('value');
   const friends = snapshotPotos.val();
+
+  console.log('FIRENDS', friends);
 
   if (friends) {
     for (const [key, value] of Object.entries(friends)) {
@@ -160,6 +172,7 @@ export const addFriend = async uniqueId => {
     refAddInPoto.child(firebase.auth().currentUser.uid).set(MesStats);
     return uid;
   } else {
+    console.log('inconnu');
     return 'inconnu';
   }
 };
@@ -259,6 +272,10 @@ export const validateGame = async (game, id, bonus) => {
   items.coins = items.coins - 50;
   items.grilles = items.grilles - 1;
   const games = items.games && items.games[id] ? [...items.games[id]] : [];
+  // Cadeau pour avoir joué une grille
+  if (games.length == 0) {
+    items.coins = items.coins + 25;
+  }
   games.push(game);
   items.games = {[id]: games};
   ref.set(items);
@@ -266,7 +283,7 @@ export const validateGame = async (game, id, bonus) => {
 
 export const checkNeedSaveToken = async token => {
   const user = firebase.auth().currentUser;
-  const ref = database.ref(`/tokens/${user.uid}`);
+  const ref = database.ref(`items/${user.uid}/tokens`);
   const snapshot = await ref.once('value');
   const data = snapshot.val();
   if (!data) {
@@ -282,7 +299,7 @@ export const checkNeedSaveToken = async token => {
 
 export const saveToken = async token => {
   const user = firebase.auth().currentUser;
-  const ref = database.ref(`/tokens/${user.uid}`);
+  const ref = database.ref(`items/${user.uid}/tokens`);
   const snapshot = await ref.once('value');
   const data = snapshot.val();
   const tokens = data ? [...data] : [];

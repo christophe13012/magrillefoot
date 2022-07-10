@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Platform} from 'react-native';
 import {colors} from '../../utils/colors';
 import Details from './Details';
 import Histo from './Histo';
@@ -30,7 +30,7 @@ const Game = ({items, grilles}) => {
         }}>
         <View
           style={{
-            backgroundColor: 'yellow',
+            backgroundColor: colors.light,
             alignItems: 'flex-end',
             justifyContent: 'center',
             paddingRight: 15,
@@ -39,7 +39,11 @@ const Game = ({items, grilles}) => {
             borderTopLeftRadius: 10,
           }}>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>
-            3 chances de gagner 1000€ !
+            3 chances de gagner{' '}
+            {Platform.os == 'ios'
+              ? grilles.details.premier.ios
+              : grilles.details.premier.android}{' '}
+            !
           </Text>
         </View>
         <View style={{paddingHorizontal: 7}}>

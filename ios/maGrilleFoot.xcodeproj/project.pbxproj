@@ -13,7 +13,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		399CF8CB1A2659E16D0C7CC6 /* libPods-maGrilleFoot-maGrilleFootTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41A5129BDB26202D77590445 /* libPods-maGrilleFoot-maGrilleFootTests.a */; };
 		53C97F0A2E6FF98B14F24784 /* libPods-maGrilleFoot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9E5F557BBFC463F3CC274B8 /* libPods-maGrilleFoot.a */; };
+		686E0CF9F9C120F223AAEF01 /* AppLovinQualityService.xcframework in AppLovinQualityService Embed Framework */ = {isa = PBXBuildFile; fileRef = 075C008716352ABEE3EE8DE1 /* AppLovinQualityService.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		939D3B9C68F09637F3839F6A /* AppLovinQualityService.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 075C008716352ABEE3EE8DE1 /* AppLovinQualityService.xcframework */; };
 		B63133A0278756A50019EF91 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B631339F278756A50019EF91 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -27,10 +29,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		30E6ACA2C5574C7786C2B537 /* AppLovinQualityService Embed Framework */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				686E0CF9F9C120F223AAEF01 /* AppLovinQualityService.xcframework in AppLovinQualityService Embed Framework */,
+			);
+			name = "AppLovinQualityService Embed Framework";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* maGrilleFootTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = maGrilleFootTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* maGrilleFootTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = maGrilleFootTests.m; sourceTree = "<group>"; };
+		075C008716352ABEE3EE8DE1 /* AppLovinQualityService.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = AppLovinQualityService.xcframework; path = AppLovinQualityService/AppLovinQualityService.xcframework; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* maGrilleFoot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = maGrilleFoot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = maGrilleFoot/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = maGrilleFoot/AppDelegate.m; sourceTree = "<group>"; };
@@ -63,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				939D3B9C68F09637F3839F6A /* AppLovinQualityService.xcframework in Frameworks */,
 				53C97F0A2E6FF98B14F24784 /* libPods-maGrilleFoot.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +158,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				105AB4846176D0E4C0410839 /* Pods */,
+				840F432299232D6FC6748F81 /* AppLovinQualityService */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -153,6 +172,14 @@
 				00E356EE1AD99517003FC87E /* maGrilleFootTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		840F432299232D6FC6748F81 /* AppLovinQualityService */ = {
+			isa = PBXGroup;
+			children = (
+				075C008716352ABEE3EE8DE1 /* AppLovinQualityService.xcframework */,
+			);
+			name = AppLovinQualityService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +211,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "maGrilleFoot" */;
 			buildPhases = (
 				CE1F73615BE4844BC37FA8D9 /* [CP] Check Pods Manifest.lock */,
+				68A3400176924B55C9050F17 /* AppLovinQualityService Updater */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -192,6 +220,8 @@
 				84C71B0EB3D5F516D49EBD8B /* [CP] Embed Pods Frameworks */,
 				F2B3CE0D4644967C206090CE /* [CP] Copy Pods Resources */,
 				12195214B02C1E43BA8422E7 /* [CP-User] [RNFB] Core Configuration */,
+				30E6ACA2C5574C7786C2B537 /* AppLovinQualityService Embed Framework */,
+				440143B0DF2C4CE445631671 /* AppLovinQualityService */,
 			);
 			buildRules = (
 			);
@@ -302,6 +332,40 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-maGrilleFoot-maGrilleFootTests/Pods-maGrilleFoot-maGrilleFootTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		440143B0DF2C4CE445631671 /* AppLovinQualityService */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				AppLovinQualityService/AppLovinQualityServicePlugin.app,
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = AppLovinQualityService;
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_FOLDER_PATH)/.AppLovinQualityService/AppLovinQualityService.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "AppLovinQualityService/AppLovinQualityServicePlugin.app/Contents/MacOS/AppLovinQualityServicePlugin \"AppLovinQualityServiceSetup-ios.rb\"";
+		};
+		68A3400176924B55C9050F17 /* AppLovinQualityService Updater */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "AppLovinQualityService Updater";
+			outputPaths = (
+				AppLovinQualityService/AppLovinQualityServicePlugin.app,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby \"AppLovinQualityServiceSetup-ios.rb\" update";
 		};
 		84C71B0EB3D5F516D49EBD8B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -509,11 +573,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PJYQ6R9NUP;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = maGrilleFoot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -536,11 +605,16 @@
 				CODE_SIGN_ENTITLEMENTS = maGrilleFoot/maGrilleFootRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PJYQ6R9NUP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = maGrilleFoot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -587,6 +661,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AppLovinQualityService",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -653,6 +731,10 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AppLovinQualityService",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

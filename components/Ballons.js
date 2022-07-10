@@ -13,54 +13,16 @@ import Toast from 'react-native-tiny-toast';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 
-const Ballons = ({ballons}) => {
+const Ballons = ({
+  ballons,
+  loading,
+  animation,
+  value,
+  open,
+  disableAnimation,
+}) => {
   const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState(0);
-  const [animation, setAnimation] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
-
-  const open = async (ballon, id) => {
-    setLoading(true);
-    setValue(ballon.value);
-    setTimeout(() => {
-      continueOpen(ballon, id);
-    }, 1000);
-  };
-  const continueOpen = async (ballon, id) => {
-    setAnimation(true);
-    Toast.show(
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text style={{color: 'white', fontSize: 16}}>
-          Bravo, tu gagnes {ballon.value}
-        </Text>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 5,
-            marginRight: 5,
-          }}
-          source={require('../images/coin.png')}
-        />
-        <Text style={{color: 'white', fontSize: 16}}>!!</Text>
-      </View>,
-      {
-        position: 70,
-        containerStyle: {backgroundColor: colors.warning, width: '90%'},
-        textStyle: {color: 'white'},
-        duration: 4000,
-      },
-    );
-    await updateItems(ballon, id);
-    setLoading(false);
-  };
   let charged = false;
   ballons &&
     ballons.forEach(element => {
@@ -77,7 +39,7 @@ const Ballons = ({ballons}) => {
       {animation && (
         <LottieView
           autoPlay
-          onAnimationFinish={() => setAnimation(false)}
+          onAnimationFinish={disableAnimation}
           loop={false}
           resizeMode="center"
           style={{zIndex: 100}}
@@ -129,6 +91,24 @@ const Ballons = ({ballons}) => {
                         onPress={() => open(ballon, i)}>
                         <Text style={{fontSize: 60}}>⚽</Text>
                       </TouchableOpacity>
+                      {ballon.ad && (
+                        <View
+                          style={{
+                            backgroundColor: colors.danger,
+                            borderRadius: 50,
+                            width: 20,
+                            height: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'absolute',
+                            right: 10,
+                          }}>
+                          <Text style={{fontSize: 5}}>Avec</Text>
+                          <Text style={{fontSize: 7, fontWeight: 'bold'}}>
+                            PUB
+                          </Text>
+                        </View>
+                      )}
                     </Animatable.View>
                   )
                 );
@@ -186,16 +166,8 @@ const Ballons = ({ballons}) => {
               <Paragraph>
                 <View style={{alignItems: 'center', flexDirection: 'row'}}>
                   <View>
-                    <Text>Tu as gagné {value}</Text>
+                    <Text>Tu as gagné {value} 💎</Text>
                   </View>
-                  <Image
-                    style={{
-                      width: 25,
-                      height: 25,
-                      marginLeft: 3,
-                    }}
-                    source={require('../images/coin.png')}
-                  />
                 </View>
               </Paragraph>
             </Dialog.Content>

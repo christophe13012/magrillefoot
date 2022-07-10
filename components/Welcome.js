@@ -94,7 +94,7 @@ const Welcome = () => {
             marginBottom: 15,
             marginTop: 15,
           }}>
-          Tu as déjà un compte ?
+          Déjà un compte ?
         </Text>
         <Button
           mode="contained"

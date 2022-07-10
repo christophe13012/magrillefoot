@@ -1,12 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import {View, Text, SafeAreaView, Platform, ScrollView} from 'react-native';
 import {colors} from '../utils/colors';
 import {useSelector} from 'react-redux';
 import {connect} from 'react-redux';
@@ -133,17 +126,13 @@ const MaGrille = ({route}) => {
         backgroundColor: colors.background,
         flex: 1,
       }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 10,
-            marginTop: 10,
-          }}
-          source={require('../images/chevron-left.png')}
-        />
-      </TouchableOpacity>
+      <IconButton
+        icon="chevron-left"
+        color={colors.white}
+        size={30}
+        onPress={() => navigation.goBack()}
+        style={{position: 'absolute', zIndex: 100}}
+      />
       <View
         style={{
           height: 70,
@@ -339,7 +328,11 @@ const MaGrille = ({route}) => {
             <View style={{marginLeft: 5}}>
               {repartitionG.map((x, i) => (
                 <Text key={i} style={{marginBottom: 5}}>
-                  {x}
+                  {i == 0
+                    ? Platform.os == 'ios'
+                      ? grilles.details.premier.ios
+                      : grilles.details.premier.android
+                    : x}
                 </Text>
               ))}
             </View>

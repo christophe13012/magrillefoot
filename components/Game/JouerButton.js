@@ -73,16 +73,8 @@ const JouerButton = ({items, limit}) => {
           borderRadius: 10,
         }}>
         <Text style={{fontSize: 18, fontWeight: 'bold', color: colors.black}}>
-          50
+          50 💎
         </Text>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 3,
-          }}
-          source={require('../../images/coin.png')}
-        />
       </View>
     </TouchableOpacity>
   );

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {colors} from '../utils/colors';
-import {Button} from 'react-native-paper';
+import {Button, IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {firebase} from '@react-native-firebase/auth';
 import {firebase as firebaseApp} from '@react-native-firebase/database';
@@ -77,17 +77,13 @@ const Team = ({route}) => {
         backgroundColor: colors.background,
         flex: 1,
       }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 10,
-            marginTop: 10,
-          }}
-          source={require('../images/chevron-left.png')}
-        />
-      </TouchableOpacity>
+      <IconButton
+        icon="chevron-left"
+        color={colors.white}
+        size={30}
+        onPress={() => navigation.goBack()}
+        style={{position: 'absolute', zIndex: 100}}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 15}}
@@ -241,15 +237,8 @@ const Team = ({route}) => {
                     marginRight: 5,
                     marginLeft: 10,
                   }}>
-                  {poto.coins ? poto.coins : 0}
+                  {poto.coins ? poto.coins : 0} 💎
                 </Text>
-                <Image
-                  style={{
-                    height: 15,
-                    width: 15,
-                  }}
-                  source={require('../images/coin.png')}
-                />
               </React.Fragment>
             </View>
           );

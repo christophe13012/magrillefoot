@@ -29,7 +29,6 @@ const BonusStore = ({visible, setVisible, inGame}) => {
     }
   };
   const doBuy = async () => {
-    console.log('doBuy', panier);
     await updateBonus(panier);
     setPanier(0);
     setSur(false);
@@ -43,7 +42,9 @@ const BonusStore = ({visible, setVisible, inGame}) => {
     <View>
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog} style={{}}>
-          <Dialog.Title style={{textAlign: 'center'}}>Store</Dialog.Title>
+          <Dialog.Title style={{textAlign: 'center', fontSize: 15}}>
+            Couvres le plus de résultats possibles sur tes grilles
+          </Dialog.Title>
           <Dialog.Content style={{alignItems: 'center'}}>
             <View
               style={{
@@ -51,6 +52,7 @@ const BonusStore = ({visible, setVisible, inGame}) => {
                 justifyContent: 'center',
                 marginBottom: 20,
                 flexDirection: 'row',
+                marginTop: 20,
               }}>
               <Card
                 style={{
@@ -60,7 +62,7 @@ const BonusStore = ({visible, setVisible, inGame}) => {
                   justifyContent: 'center',
                 }}>
                 <View style={{marginTop: 13}}>
-                  <Text style={{fontSize: 30}}>🍀</Text>
+                  <Text style={{fontSize: 30}}>💊</Text>
                 </View>
               </Card>
               <View
@@ -69,21 +71,8 @@ const BonusStore = ({visible, setVisible, inGame}) => {
                   alignItems: 'center',
                   marginLeft: 30,
                 }}>
-                <Text style={{fontWeight: 'bold'}}>100</Text>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    marginLeft: 3,
-                  }}
-                  source={require('../images/coin.png')}
-                />
+                <Text style={{fontWeight: 'bold'}}>100 💎</Text>
               </View>
-            </View>
-            <View>
-              <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                Couvres le plus de résultats possibles sur tes grilles
-              </Text>
             </View>
             <View style={{marginTop: 20, width: '50%'}}>
               <InputSpinner
@@ -115,15 +104,9 @@ const BonusStore = ({visible, setVisible, inGame}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: 'bold'}}>Total : {panier * 100}</Text>
-              <Image
-                style={{
-                  width: 25,
-                  height: 25,
-                  marginLeft: 3,
-                }}
-                source={require('../images/coin.png')}
-              />
+              <Text style={{fontWeight: 'bold'}}>
+                Total : {panier * 100} 💎
+              </Text>
             </View>
             {sur ? (
               <View

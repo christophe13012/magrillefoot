@@ -22,6 +22,7 @@ import {
   IconButton,
   Portal,
   TextInput,
+  ActivityIndicator,
 } from 'react-native-paper';
 import {Item} from 'native-base';
 import * as yup from 'yup';
@@ -38,6 +39,7 @@ const TeamsComponent = ({teams}) => {
   const dispatch = useDispatch();
   const [visibleIn, setVisibleIn] = useState(false);
   const [visibleOut, setVisibleOut] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [visibleTeamsJoin, setVisibleTeamsJoin] = useState(false);
   const [visibleTeamsForm, setVisibleTeamsForm] = useState(false);
   const [code, setCode] = useState('');
@@ -205,8 +207,8 @@ const TeamsComponent = ({teams}) => {
               </TouchableOpacity>
             ))
           ) : (
-            <View>
-              <Text>Vous n'avez rejoint ou créé aucune team</Text>
+            <View style={{alignItems: 'center', marginTop: 20}}>
+              <Text>Tu n'as rejoint ou créé aucune team</Text>
             </View>
           )}
         </View>
@@ -224,10 +226,9 @@ const TeamsComponent = ({teams}) => {
                 displayName: '',
               }}
               onSubmit={async values => {
-                console.log('NOM DE LA TEAM', values);
+                setLoading(true);
                 const name = values.displayName.trim();
                 const nameTaken = await isTeamNameTaken(name);
-                console.log('nameTaken', nameTaken);
                 if (nameTaken) {
                   Toast.show('Nom de team déja utilisé', {
                     position: 70,
@@ -238,6 +239,7 @@ const TeamsComponent = ({teams}) => {
                     textStyle: {color: 'white'},
                     duration: 2000,
                   });
+                  setLoading(false);
                 } else {
                   const itemsNew = {...items};
                   await saveTeamName(name, itemsNew, items.name);
@@ -257,6 +259,7 @@ const TeamsComponent = ({teams}) => {
                       duration: 2000,
                     },
                   );
+                  setLoading(false);
                   setVisibleTeamsForm(false);
                 }
               }}
@@ -315,17 +318,24 @@ const TeamsComponent = ({teams}) => {
                         {errors.displayName}
                       </Text>
                     )}
-                    <Button
-                      style={{
-                        marginTop: 20,
-                        backgroundColor: colors.light,
-                        marginHorizontal: 20,
-                      }}
-                      labelStyle={{color: colors.background}}
-                      mode="contained"
-                      onPress={handleSubmit}>
-                      Valider
-                    </Button>
+                    {loading ? (
+                      <ActivityIndicator
+                        color={colors.background}
+                        style={{marginTop: 20}}
+                      />
+                    ) : (
+                      <Button
+                        style={{
+                          marginTop: 20,
+                          backgroundColor: colors.light,
+                          marginHorizontal: 20,
+                        }}
+                        labelStyle={{color: colors.background}}
+                        mode="contained"
+                        onPress={handleSubmit}>
+                        Valider
+                      </Button>
+                    )}
                   </React.Fragment>
                 </View>
               )}
@@ -344,9 +354,9 @@ const TeamsComponent = ({teams}) => {
                 displayName: '',
               }}
               onSubmit={async values => {
+                setLoading(true);
                 const name = values.displayName.trim();
                 const teamName = await teamNameByCode(name);
-                console.log('teamName', teamName);
                 if (!teamName) {
                   Toast.show('Team inconnu', {
                     position: 70,
@@ -357,6 +367,7 @@ const TeamsComponent = ({teams}) => {
                     textStyle: {color: 'white'},
                     duration: 2000,
                   });
+                  setLoading(false);
                 } else {
                   const itemsNew = {...items};
                   const teams = items.teams ? items.teams : [];
@@ -385,6 +396,7 @@ const TeamsComponent = ({teams}) => {
                       duration: 2000,
                     });
                   }
+                  setLoading(false);
                   setVisibleTeamsJoin(false);
                 }
               }}
@@ -440,17 +452,24 @@ const TeamsComponent = ({teams}) => {
                         {errors.displayName}
                       </Text>
                     )}
-                    <Button
-                      style={{
-                        marginTop: 20,
-                        backgroundColor: colors.light,
-                        marginHorizontal: 20,
-                      }}
-                      labelStyle={{color: colors.background}}
-                      mode="contained"
-                      onPress={handleSubmit}>
-                      Valider
-                    </Button>
+                    {loading ? (
+                      <ActivityIndicator
+                        color={colors.background}
+                        style={{marginTop: 20}}
+                      />
+                    ) : (
+                      <Button
+                        style={{
+                          marginTop: 20,
+                          backgroundColor: colors.light,
+                          marginHorizontal: 20,
+                        }}
+                        labelStyle={{color: colors.background}}
+                        mode="contained"
+                        onPress={handleSubmit}>
+                        Valider
+                      </Button>
+                    )}
                   </React.Fragment>
                 </View>
               )}

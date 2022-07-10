@@ -46,15 +46,8 @@ const CustomHeader = ({ballons, onStore}) => {
               marginRight: 5,
               color: colors.white,
             }}>
-            {items.coins}
+            {items.coins} 💎
           </Text>
-          <Image
-            style={{
-              width: 25,
-              height: 25,
-            }}
-            source={require('../images/coin.png')}
-          />
         </View>
         <View
           style={{
@@ -90,9 +83,8 @@ const CustomHeader = ({ballons, onStore}) => {
           <Text
             style={{
               fontSize: 22,
-              marginLeft: 1,
             }}>
-            🍀
+            💊
           </Text>
         </View>
       </View>

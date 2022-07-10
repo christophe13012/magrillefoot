@@ -114,15 +114,7 @@ const TeamsFormJoin = ({friends}) => {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Text>Ajoute un ami pour recevoir 100 coins</Text>
-          <Image
-            style={{
-              width: 15,
-              height: 15,
-              marginLeft: 3,
-            }}
-            source={require('../images/coin.png')}
-          />
+          <Text>Ajoute un ami pour recevoir 150 💎</Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Button
@@ -201,7 +193,7 @@ const TeamsFormJoin = ({friends}) => {
             ))
           ) : (
             <View>
-              <Text>Vous n'avez encore aucun ami connecté à l'app</Text>
+              <Text>Tu n'as encore aucun ami connecté à l'app</Text>
             </View>
           )}
         </View>
@@ -281,15 +273,7 @@ const TeamsFormJoin = ({friends}) => {
                 justifyContent: 'center',
                 marginTop: 10,
               }}>
-              <Text>Dès qu'il se connectera, tu recevras 100</Text>
-              <Image
-                style={{
-                  width: 15,
-                  height: 15,
-                  marginLeft: 3,
-                }}
-                source={require('../images/coin.png')}
-              />
+              <Text>Dès qu'il se connectera, tu recevras 100 💎</Text>
             </View>
           </Dialog>
         </Portal>

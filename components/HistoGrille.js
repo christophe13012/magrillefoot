@@ -1,25 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, SafeAreaView, Platform, ScrollView} from 'react-native';
 import {colors} from '../utils/colors';
 import {IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {firebase} from '@react-native-firebase/auth';
 import {connect, useDispatch} from 'react-redux';
 import {save_items} from '../Store/actions';
 import {useNavigation} from '@react-navigation/native';
-import {codeByTeam, getTeam, removeTeam} from '../Services/http';
-import {levels, repartitionG} from '../utils/utils';
-import Clipboard from '@react-native-community/clipboard';
-import Toast from 'react-native-tiny-toast';
+import {repartitionG} from '../utils/utils';
 import moment from 'moment';
-import {date} from 'yup';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -48,17 +36,13 @@ const HistoGrille = ({route}) => {
         backgroundColor: colors.background,
         flex: 1,
       }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image
-          style={{
-            width: 25,
-            height: 25,
-            marginLeft: 10,
-            marginTop: 10,
-          }}
-          source={require('../images/chevron-left.png')}
-        />
-      </TouchableOpacity>
+      <IconButton
+        icon="chevron-left"
+        color={colors.white}
+        size={30}
+        onPress={() => navigation.goBack()}
+        style={{position: 'absolute', zIndex: 100}}
+      />
       <View
         style={{
           height: 70,
@@ -237,7 +221,11 @@ const HistoGrille = ({route}) => {
             <View style={{marginLeft: 5}}>
               {repartitionG.map((x, i) => (
                 <Text key={i} style={{marginBottom: 5}}>
-                  {x}
+                  {i == 0
+                    ? Platform.os == 'ios'
+                      ? grilles.details.premier.ios
+                      : grilles.details.premier.android
+                    : x}
                 </Text>
               ))}
             </View>
